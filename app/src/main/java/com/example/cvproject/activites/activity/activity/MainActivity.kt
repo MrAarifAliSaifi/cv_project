@@ -1,26 +1,40 @@
-package cvproject.blinkit.activites.activity.activity
+// MainActivity.kt
+package com.example.basicmvvmapp
 
-import android.os.Bundle
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Context
+import android.content.Intent
+import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import cvproject.blinkit.databinding.ActivityMainBinding
+import com.example.cvproject.activites.activity.base.BaseActivity
+import com.example.cvproject.activites.activity.viewmodeles.MainActivityVM
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import cvproject.blinkit.R
+import cvproject.blinkit.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
+    private val viewmodel: MainActivityVM by viewModels()
 
-    private lateinit var binding: ActivityMainBinding
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    companion object {
+        const val TAG = "MainActivity"
+        fun getStartIntent(context: Context): Intent {
+            return Intent(context, MainActivity::class.java).apply {
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+            }
+        }
+    }
 
+    override fun initializeViewBinding(): ActivityMainBinding {
+        return ActivityMainBinding.inflate(layoutInflater)
+    }
+
+    override fun initializeViewModel(): MainActivityVM {
+        return viewmodel
+    }
+
+    override fun setupUI() {
         val navView: BottomNavigationView = binding.navView
-
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
             setOf(
@@ -29,4 +43,11 @@ class MainActivity : AppCompatActivity() {
         )
         navView.setupWithNavController(navController)
     }
+
+    override fun setupListeners() {
+    }
+
+    override fun observeViewModel() {
+    }
+
 }
