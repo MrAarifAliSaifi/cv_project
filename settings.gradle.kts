@@ -23,6 +23,11 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
+
+        // Add the PhonePe SDK repository here
+        maven {
+            url = uri("https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android")
+        }
     }
 }
 

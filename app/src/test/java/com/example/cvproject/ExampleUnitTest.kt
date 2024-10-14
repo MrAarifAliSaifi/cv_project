@@ -1,4 +1,4 @@
-package com.example.cvproject
+package cvproject.blinkit
 
 import org.junit.Test
 
