@@ -1,6 +1,6 @@
 [versions]
-agp = "8.5.2"
-kotlin = "1.9.0"
+agp = "8.3.0-alpha05"
+kotlin = "1.8.10"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 material = "1.12.0"
@@ -27,6 +27,9 @@ glide-compiler = "4.15.1"
 phonepe-sdk = "2.3.0"
 retrofit = "2.9.0"
 converter-gson = "2.9.0"
+constraintlayout = "2.1.4"
+lifecycle-livedata-ktx = "2.8.6"
+annotation = "1.6.0"
 
 [libraries]
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -58,6 +61,9 @@ glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", versi
 phonepe-sdk = { group = "phonepe.intentsdk.android.release", name = "IntentSDK", version.ref = "phonepe-sdk" }
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converter-gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "converter-gson" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle-livedata-ktx" }
+annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
