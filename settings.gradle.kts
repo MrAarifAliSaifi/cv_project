@@ -8,6 +8,13 @@ pluginManagement {
             }
         }
         mavenCentral()
+
+
+        maven(url = uri("https://jitpack.io"))
+
+        maven(
+            url = "https://phonepe.mycloudrepo.io/public/repositories/phonepe-intentsdk-android"
+        )
         gradlePluginPortal()
     }
 }
@@ -21,4 +28,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "cvproject"
 include(":app")
- 
+
