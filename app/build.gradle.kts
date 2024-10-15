@@ -96,4 +96,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
 
+    // Circle Image View
+    implementation(libs.circle.image.view)
+    // Swipe Refresh Layout
+    implementation(libs.swipe.refresh.layout)
+
 }
