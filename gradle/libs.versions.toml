@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.2"
+agp = "8.3.0-alpha05"
 kotlin = "1.8.10"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
@@ -31,6 +31,8 @@ constraintlayout = "2.1.4"
 lifecycle-livedata-ktx = "2.8.6"
 annotation = "1.6.0"
 databindingRuntime = "8.7.0"
+civ = "3.1.0"
+srl = "1.2.0-alpha01"
 
 [libraries]
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -66,6 +68,9 @@ constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayo
 lifecycle-livedata-ktx = { group = "androidx.lifecycle", name = "lifecycle-livedata-ktx", version.ref = "lifecycle-livedata-ktx" }
 annotation = { group = "androidx.annotation", name = "annotation", version.ref = "annotation" }
 androidx-databinding-runtime = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databindingRuntime" }
+circle-image-view = { group = "de.hdodenhof", name = "circleimageview", version.ref = "civ"}
+swipe-refresh-layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "srl"}
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
