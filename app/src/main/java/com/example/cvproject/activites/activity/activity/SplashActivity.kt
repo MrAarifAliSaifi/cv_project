@@ -1,15 +1,14 @@
 package com.example.cvproject.activites.activity.activity
 
 import android.annotation.SuppressLint
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.viewmodeles.SplashVM
+import com.google.firebase.BuildConfig
 import com.google.firebase.FirebaseApp
-import com.google.firebase.auth.FirebaseAuth
-import cvproject.blinkit.BuildConfig
+
 import cvproject.blinkit.databinding.SpalshBindingBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
