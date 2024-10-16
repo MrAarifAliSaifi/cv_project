@@ -76,5 +76,8 @@
     <!--dimens for constraint layout-->
     <dimen name="wrap_constraint">0dp</dimen>
     <dimen name="dp_streak_progress_circle">28dp</dimen>
-
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="_1000">0.2dp</dimen>
 </resources>

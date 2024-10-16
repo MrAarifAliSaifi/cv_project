@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomSearchView" parent="Widget.AppCompat.SearchView">
+        <item name="queryBackground">@android:color/transparent</item>
+        <item name="searchIcon">@drawable/search</item>
+        <item name="closeIcon">@drawable/cancel_search</item>
+        <item name="submitBackground">@android:color/transparent</item>
+    </style>
+</resources>

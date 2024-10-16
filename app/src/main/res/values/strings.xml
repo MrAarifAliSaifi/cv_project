@@ -3,7 +3,7 @@
     <string name="title_activity_main">Blinkit</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_notifications">Settings</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="prompt_email">Email</string>
@@ -40,4 +40,16 @@
     <string name="msg_invalid_otp">Invalid OTP</string>
     <string name="msg_enter_mobile_number">Enter mobile number</string>
     <string name="msg_mobile_number_successfully_linked">Mobile Number successfully linked</string>
+    <string name="contact_us">Contact Us</string>
+    <string name="rate_us_on_playstore">Rate Us</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="share_app">Share App</string>
+    <string name="logout">Logout</string>
+    <string name="notification">Notification</string>
+    <string name="about_us">About Us</string>
+    <string name="home_shastri_nagar_colony_gorakhnath_gorakhpur">Home - Shastri Nagar Colony Gorakhnath Gorakhpur, Uttar Pardesh</string>
+    <string name="blinkit_in">Blinkit in</string>
+    <string name="admin">Admin</string>
+    <string name="search_mango">Search Mango</string>
+    <string name="bestsellers">Bestsellers</string>
 </resources>
