@@ -20,14 +20,12 @@
     <color name="colorOffWhite">@color/grey_F0F0F0</color>
     <color name="colorBlack">@color/grey_000000</color>
 
-    <!-- PwTextColors -->
     <color name="heading_AAA">@color/text_heading</color>
     <color name="body_text_1_AAA">@color/text_body_3D3D3D</color>
     <color name="body_text_2_AAA">@color/text_body_757575</color>
     <color name="text_link_AAA">@color/text_body_037CBF</color>
     <color name="text_disabled">@color/grey_A1A3A4</color>
 
-    <!-- PwPrimaryColor -->
     <color name="primary_900">@color/blue_140D52</color>
     <color name="primary_800">@color/blue_211774</color>
     <color name="primary_700">@color/blue_312596</color>
@@ -40,7 +38,6 @@
     <color name="primary_50">@color/blue_F1EFFF</color>
     <color name="primary_AA">@color/primary_500</color>
 
-    <!-- PwSuccessColor -->
     <color name="success_900">@color/green_0A2C14</color>
     <color name="success_800">@color/green_0E3F1D</color>
     <color name="success_700">@color/green_125226</color>
@@ -53,7 +50,6 @@
     <color name="success_10">@color/green_DFF1E4</color>
     <color name="success_AA">@color/green_1B7938</color>
 
-    <!-- PwErrorColor -->
     <color name="error_900">@color/red_450E13</color>
     <color name="error_800">@color/red_63141B</color>
     <color name="error_700">@color/red_821B23</color>
@@ -66,7 +62,6 @@
     <color name="error_10">@color/red_FEE7E9</color>
     <color name="error_AA">@color/red_BF2734</color>
 
-    <!-- PwWarningColors -->
     <color name="warning_900">@color/yellow_543D11</color>
     <color name="warning_800">@color/yellow_7A5818</color>
     <color name="warning_700">@color/yellow_9F741F</color>
@@ -79,7 +74,6 @@
     <color name="warning_10">@color/yellow_FFF6E5</color>
     <color name="warning_AA">@color/yellow_EAAA2E</color>
 
-    <!-- PwLinkColors -->
     <color name="link_900">@color/blue_012D45</color>
     <color name="link_800">@color/blue_024063</color>
     <color name="link_700">@color/blue_025482</color>
@@ -92,7 +86,6 @@
     <color name="link_10">@color/blue_F1F5FE</color>
     <color name="link_AA">@color/blue_037CBF</color>
 
-    <!-- PwButtonColors -->
     <color name="primaryButtonColor">@color/primary_500</color>
     <color name="primaryDisableButtonColor">@color/primary_100</color>
     <color name="primaryButtonTextColor">@color/white</color>
@@ -114,18 +107,15 @@
     <color name="darkButtonColor">@color/grey_900</color>
     <color name="darkDisableButtonColor">@color/grey_500</color>
 
-    <!-- PwStrokeColor -->
     <color name="strokeDark">@color/stroke_100</color>
     <color name="strokeMedium">@color/stroke_75</color>
     <color name="strokeLight">@color/stroke_50</color>
     <color name="strokeExtraLight">@color/stroke_25</color>
     <color name="strokeWhite">@color/colorWhite</color>
 
-    <!-- ToastColor -->
     <color name="toastBackgroundColor">@color/grey_900</color>
     <color name="toastContentColor">@color/white</color>
 
-    <!-- OptionBgColor -->
     <color name="selectedCorrectOptionBgColor">@color/success_10</color>
     <color name="selectedIncorrectBgColor">@color/error_10</color>
     <color name="selectedOptionBgColor">@color/primary_50</color>
@@ -133,7 +123,6 @@
     <color name="hintOptionBgColor">@color/warning_10</color>
     <color name="sscSelectedOptionBgColor">@color/white</color>
 
-    <!-- QuestionBorderColor -->
     <color name="selectedOptionCorrectBorderColor">@color/success_500</color>
     <color name="selectedIncorrectOptionBorderColor">@color/error_500</color>
     <color name="selectedOptionBorderColor">@color/primary_600</color>
@@ -397,7 +386,6 @@
     <color name="stroke_50">@color/grey_D9DCE1</color>
     <color name="stroke_25">@color/grey_EFEFEF</color>
 
-    <!-- TransparentColor -->
     <color name="transparentColor">#00FFFFFF</color>
 
     <color name="color_00476D">#00476D</color>
