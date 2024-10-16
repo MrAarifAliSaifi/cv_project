@@ -9,6 +9,7 @@ import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.viewmodeles.SplashVM
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import cvproject.blinkit.BuildConfig
 import cvproject.blinkit.databinding.SpalshBindingBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -28,7 +29,7 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
     }
 
 
-    override fun setupUI(){
+    override fun setupUI() {
         FirebaseApp.initializeApp(this)
 //         val currentUser = FirebaseAuth.getInstance().currentUser
 //        if (currentUser != null) {
@@ -46,17 +47,21 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
     }
 
     private fun decideNextScreen() {
-        lifecycleScope.launch {
-            delay(2000)
+        if (BuildConfig.DEBUG) {
+            startActivity(MainActivity.getStartIntent(this@SplashActivity))
+        } else {
+            lifecycleScope.launch {
+                delay(2000)
 
-            if (isUserLoggedIn()) {
-                val mainIntent = MainActivity.getStartIntent(this@SplashActivity)
-                startActivity(mainIntent)
-            } else {
-                val mainIntent = LoginActivity.getStartIntent(this@SplashActivity)
-                startActivity(mainIntent)
+                if (isUserLoggedIn()) {
+                    val mainIntent = MainActivity.getStartIntent(this@SplashActivity)
+                    startActivity(mainIntent)
+                } else {
+                    val mainIntent = LoginActivity.getStartIntent(this@SplashActivity)
+                    startActivity(mainIntent)
+                }
+                finish()
             }
-            finish()
         }
     }
 

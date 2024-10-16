@@ -346,7 +346,7 @@
     <color name="cyan_0E4448">#0E4448</color>
     <color name="cyan_AD4BB5">#AD4BB5</color>
 
-    <color name="red">#E80505</color>
+    <color name="red_">#E80505</color>
     <color name="blue_3700b3">#FF3700B3</color>
 
     <color name="grey_23292F">#23292F</color>
@@ -401,7 +401,6 @@
     <color name="red">#f294b2</color>
     <color name="yellow_dark">#fcba03</color>
     <color name="yellow_light">#eef595</color>
-    <color name="transparent">#00000000</color>
     <color name="bright_yellow">#FFAA1D</color>
     <color name="mimosa">#FFCA4B</color>
     <color name="amber">#FFBF00</color>
