@@ -10,4 +10,15 @@
     <color name="yellow">#f7ef05</color>
     <color name="white_dark">#f0ede6</color>
     <color name="sky_blue">#e1e9f5</color>
+    <color name="dark_white">#dae6df</color>
+    <color name="red">#f294b2</color>
+    <color name="yellow_dark">#fcba03</color>
+    <color name="yellow_light">#eef595</color>
+    <color name="transparent">#00000000</color>
+    <color name="bright_yellow">#FFAA1D</color>
+    <color name="mimosa">#FFCA4B</color>
+    <color name="amber">#FFBF00</color>
+    <color name="freesia">#F6C324</color>
+    <color name="pastel_yellow">#FDFD96</color>
+    <color name="light_yellow">#FFFFED</color>
 </resources>

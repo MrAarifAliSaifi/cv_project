@@ -10,6 +10,8 @@ import cvproject.blinkit.databinding.HomeListItemsBinding
 
 class HomeItemsAdapter(private val imageList: List<HomeItem>) : RecyclerView.Adapter<HomeItemsAdapter.HomeItemsViewHolder>() {
 
+    private var filteredList: List<HomeItem> = imageList
+
     class HomeItemsViewHolder(private val binding: HomeListItemsBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(item: HomeItem) {
             binding.iv.setImageResource(item.imageResId)
@@ -25,10 +27,15 @@ class HomeItemsAdapter(private val imageList: List<HomeItem>) : RecyclerView.Ada
     }
 
     override fun onBindViewHolder(holder: HomeItemsViewHolder, position: Int) {
-        holder.bind(imageList[position])
+        holder.bind(filteredList[position])
     }
 
     override fun getItemCount(): Int {
-        return imageList.size
+        return filteredList.size
+    }
+
+    fun updateList(newList: List<HomeItem>) {
+        filteredList = newList
+        notifyDataSetChanged()
     }
 }
