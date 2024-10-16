@@ -31,6 +31,10 @@ constraintlayout = "2.1.4"
 lifecycle-livedata-ktx = "2.8.6"
 annotation = "1.6.0"
 databindingRuntime = "8.7.0"
+civ = "3.1.0"
+srl = "1.2.0-alpha01"
+gms = "4.4.2"
+
 
 [libraries]
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -74,5 +78,4 @@ swipe-refresh-layout = { group = "androidx.swiperefreshlayout", name = "swiperef
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "gms" }
-
 
