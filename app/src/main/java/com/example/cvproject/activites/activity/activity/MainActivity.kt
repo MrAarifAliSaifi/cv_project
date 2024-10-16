@@ -1,6 +1,4 @@
-// MainActivity.kt
 package com.example.basicmvvmapp
-
 import android.content.Context
 import android.content.Intent
 import androidx.activity.viewModels
@@ -34,6 +32,16 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
     }
 
     override fun setupUI() {
+        setupNavigation()
+    }
+
+    override fun setupListeners() {
+    }
+
+    override fun observeViewModel() {
+    }
+
+    private fun setupNavigation() {
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         val appBarConfiguration = AppBarConfiguration(
@@ -43,11 +51,4 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
         )
         navView.setupWithNavController(navController)
     }
-
-    override fun setupListeners() {
-    }
-
-    override fun observeViewModel() {
-    }
-
 }

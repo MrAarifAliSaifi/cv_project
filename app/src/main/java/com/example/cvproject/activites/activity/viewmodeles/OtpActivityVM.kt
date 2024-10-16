@@ -2,6 +2,5 @@ package com.example.cvproject.activites.activity.viewmodeles
 
 import androidx.lifecycle.ViewModel
 
-
-class LoginActivityVM: ViewModel() {
+class OtpActivityVM :ViewModel() {
 }
