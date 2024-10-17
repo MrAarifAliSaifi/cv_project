@@ -6,4 +6,10 @@
         <item name="closeIcon">@drawable/cancel_search</item>
         <item name="submitBackground">@android:color/transparent</item>
     </style>
+        <style name="CustomSearchViewStyle" parent="Widget.AppCompat.SearchView">
+            <item name="searchIcon">@drawable/search</item>
+            <item name="closeIcon">@drawable/cancel_search</item>
+            <item name="submitBackground">@android:color/transparent</item>
+        </style>
+
 </resources>

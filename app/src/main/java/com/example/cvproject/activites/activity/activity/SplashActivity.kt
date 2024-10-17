@@ -1,13 +1,16 @@
 package com.example.cvproject.activites.activity.activity
 
 import android.annotation.SuppressLint
+import android.os.Build
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.viewmodeles.SplashVM
 import com.google.firebase.BuildConfig
 import com.google.firebase.FirebaseApp
+import cvproject.blinkit.R
 
 import cvproject.blinkit.databinding.SpalshBindingBinding
 import kotlinx.coroutines.delay
@@ -37,6 +40,10 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
 //            Toast.makeText(this, " not register", Toast.LENGTH_SHORT).show()
 //        }
         decideNextScreen()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.window.statusBarColor =
+                ContextCompat.getColor(this, R.color.freesia)
+        }
     }
 
     override fun setupListeners() {

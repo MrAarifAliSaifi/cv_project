@@ -5,7 +5,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import cvproject.blinkit.BuildConfig
 import android.view.ViewGroup
 import cvproject.blinkit.R
 import androidx.fragment.app.Fragment
@@ -13,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cvproject.activites.activity.adapters.NotificationAdapter
 import com.example.cvproject.activites.activity.dataclass.ListItemNotification
+import com.google.firebase.BuildConfig
 import cvproject.blinkit.databinding.FragmentNotificationsBinding
 
 class NotificationsFragment : Fragment() {
@@ -73,7 +73,7 @@ class NotificationsFragment : Fragment() {
             }
 
             getString(R.string.share_app) -> {
-                shareApp()
+//                shareApp()
             }
 
 
@@ -102,19 +102,19 @@ class NotificationsFragment : Fragment() {
         }
     }
 
-    private fun shareApp() {
-        try {
-            BuildConfig.APPLICATION_ID
-            val shareIntent = Intent(Intent.ACTION_SEND)
-            shareIntent.type = "text/plain"
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
-            var shareMessage = "\nLet me recommend you this fantastic application\n\n"
-            shareMessage =
-                """ ${shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID} """.trimIndent()
-            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
-            startActivity(Intent.createChooser(shareIntent, "choose one"))
-        } catch (e: java.lang.Exception) {
-
-        }
-    }
+//    private fun shareApp() {
+//        try {
+//            BuildConfig.
+//            val shareIntent = Intent(Intent.ACTION_SEND)
+//            shareIntent.type = "text/plain"
+//            shareIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.app_name))
+//            var shareMessage = "\nLet me recommend you this fantastic application\n\n"
+//            shareMessage =
+//                """ ${shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID} """.trimIndent()
+//            shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+//            startActivity(Intent.createChooser(shareIntent, "choose one"))
+//        } catch (e: java.lang.Exception) {
+//
+//        }
+//    }
 }

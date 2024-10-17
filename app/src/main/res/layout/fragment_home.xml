@@ -92,6 +92,7 @@
                 android:background="@drawable/rounded_corner_background"
                 android:layout_margin="@dimen/_10sdp"
                 android:iconifiedByDefault="false"
+                style="@style/CustomSearchViewStyle"
                 android:queryHint="@string/search_mango" />
 
     </com.google.android.material.appbar.AppBarLayout>

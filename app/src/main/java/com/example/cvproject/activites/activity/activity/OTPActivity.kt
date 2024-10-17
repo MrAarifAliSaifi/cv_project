@@ -2,10 +2,12 @@ package com.example.cvproject.activites.activity.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.text.TextWatcher
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.textWatcher.TextWatcherWrapper
@@ -39,6 +41,10 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
     override fun setupUI() {
         val mobileNumber = intent.getStringExtra(EXTRA_MOBILE_NUMBER)
         binding.tvUserContact.text=mobileNumber
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.window.statusBarColor =
+                ContextCompat.getColor(this, R.color.freesia)
+        }
     }
 
     override fun setupListeners() {
@@ -225,6 +231,7 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
             } else {
                 val mainIntent = MainActivity.getStartIntent(this)
                 startActivity(mainIntent)
+                finish()
             }
         }
 

@@ -2,12 +2,15 @@ package com.example.cvproject.activites.activity.activity
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.viewmodeles.LoginActivityVM
+import cvproject.blinkit.R
 import cvproject.blinkit.databinding.ActivityLoginBinding
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
@@ -33,6 +36,10 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
 
     override fun setupUI(){
         checkLengthOfMobileNumber()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            this.window.statusBarColor =
+                ContextCompat.getColor(this, R.color.freesia)
+        }
     }
 
     override fun setupListeners(){

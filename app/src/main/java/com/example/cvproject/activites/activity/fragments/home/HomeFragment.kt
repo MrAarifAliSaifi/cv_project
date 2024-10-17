@@ -17,7 +17,6 @@ import cvproject.blinkit.R
 import cvproject.blinkit.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
-
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var homeViewModel: HomeViewModel
@@ -56,7 +55,6 @@ class HomeFragment : Fragment() {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     return false
                 }
-
                 override fun onQueryTextChange(query: String?): Boolean {
                     val filteredList = originalList.filter {
                         it.name.contains(query ?: "", ignoreCase = true)
