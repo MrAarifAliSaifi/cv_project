@@ -11,6 +11,7 @@ import cvproject.blinkit.R
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.cvproject.activites.activity.activity.AdminActivity
 import com.example.cvproject.activites.activity.adapters.NotificationAdapter
 import com.example.cvproject.activites.activity.dataclass.ListItemNotification
 import cvproject.blinkit.databinding.FragmentNotificationsBinding
@@ -84,6 +85,10 @@ class NotificationsFragment : Fragment() {
                         Uri.parse("https://www.termsfeed.com/live/251cc4f5-6fa1-48ed-8821-37d42c176770")
                     )
                 )
+            }
+
+            getString(R.string.admin) -> {
+                startActivity(AdminActivity.getStartIntent(requireContext()))
             }
         }
     }

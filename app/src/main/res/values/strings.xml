@@ -52,4 +52,16 @@
     <string name="admin">Admin</string>
     <string name="search_mango">Search Mango</string>
     <string name="bestsellers">Bestsellers</string>
+    <string name="item_name">Item name</string>
+    <string name="add_item">Add Item</string>
+    <string name="item_price_in_rs">Item Price in Rs</string>
+    <string name="item_name_can_t_be_empty">Item name can\'t be empty</string>
+    <string name="item_price_can_t_be_empty">Item price can\'t be empty</string>
+    <string name="select_image_first_to_proceed_further">Select Image First To Proceed Further</string>
+    <string name="permission_denied_can_t_access_gallery">Permission denied can\'t access gallery</string>
+    <string name="add_image">Add Image</string>
+    <string name="item_saved_successfully">Item saved successfully</string>
+    <string name="failed_to_save_item">Failed to save item</string>
+    <string name="unable_to_access_image">Unable to access image</string>
+    <string name="rupee_symbol">Price \u20B9</string>
 </resources>

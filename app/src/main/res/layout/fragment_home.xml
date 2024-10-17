@@ -57,6 +57,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_14sdp"
+                    android:text="Delivered in 8 Minutes"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@id/blinkit_in"
                     app:layout_constraintTop_toBottomOf="@id/blinkit_in" />
@@ -78,6 +79,7 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_margin="@dimen/_18sdp"
                     android:src="@drawable/mangoes3"
+                    android:background="@drawable/image_background"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
