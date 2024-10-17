@@ -49,9 +49,10 @@ class HomeFragment : Fragment() {
             fetchItemsFromDatabase()
 
             swipeRefreshLayout.setOnRefreshListener {
+                binding.swipeRefreshLayout.isRefreshing = true
                 fetchItemsFromDatabase()
                 Handler().postDelayed({
-                    swipeRefreshLayout.isRefreshing = false
+                    binding.swipeRefreshLayout.isRefreshing = false
                 }, 4000)
                 swipeRefreshLayout.setColorSchemeColors(
                     resources.getColor(R.color.red),

@@ -69,6 +69,9 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
             } else if (editTextItemPrice.text.toString().isEmpty()) {
                 Utils.showSnackBar(getString(R.string.item_price_can_t_be_empty), binding.root)
                 return false
+            } else if (editTextItemQuantity.text.toString().isEmpty()) {
+                Utils.showSnackBar(getString(R.string.item_price_can_t_be_empty), binding.root)
+                return false
             } else if (selectedImageUri == null) {
                 Utils.showSnackBar(
                     getString(R.string.select_image_first_to_proceed_further), binding.root
@@ -97,13 +100,14 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
         showProgress()
         val itemName = binding.editTextItemName.text.toString().trim()
         val itemPrice = binding.editTextItemPrice.text.toString().trim()
+        val itemQuantity = binding.editTextItemQuantity.text.toString().trim()
 
         val storageReference = FirebaseStorage.getInstance().reference
         val imageRef = storageReference.child("Images/${UUID.randomUUID()}.jpg")
         imageRef.putFile(selectedImageUri!!).addOnSuccessListener { taskSnapshot ->
             imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
                 // Get the download URL and save the item data
-                saveItemDataToDatabase(itemName, itemPrice, downloadUri.toString())
+                saveItemDataToDatabase(itemName, itemPrice, itemQuantity, downloadUri.toString())
             }
         }.addOnFailureListener {
             hideProgress()
@@ -111,12 +115,21 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
         }
     }
 
-    private fun saveItemDataToDatabase(name: String, price: String, imageUrl: String) {
+    private fun saveItemDataToDatabase(
+        name: String,
+        price: String,
+        quantity: String,
+        imageUrl: String
+    ) {
         val databaseReference = FirebaseDatabase.getInstance().reference.child("BlinkitItems")
         val itemId = databaseReference.push().key
 
         val itemData = mapOf(
-            "id" to itemId, "name" to name, "price" to price, "imageUrl" to imageUrl
+            "id" to itemId,
+            "name" to name,
+            "price" to price,
+            "quantity" to quantity,
+            "imageUrl" to imageUrl
         )
 
         // Save the item data to Firebase Realtime Database
@@ -132,7 +145,7 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
 
     private fun showProgress() {
         binding.apply {
-            buttonAddImage.isEnabled = false
+            buttonAddImage.visibility = View.INVISIBLE
             progressBar.visibility = View.VISIBLE
             buttonSaveImage.visibility = View.INVISIBLE
         }
@@ -140,7 +153,7 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
 
     private fun hideProgress() {
         binding.apply {
-            buttonAddImage.isEnabled = true
+            buttonAddImage.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
             buttonSaveImage.visibility = View.VISIBLE
         }

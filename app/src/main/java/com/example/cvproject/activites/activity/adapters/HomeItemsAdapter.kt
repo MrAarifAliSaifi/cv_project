@@ -18,7 +18,7 @@ class HomeItemsAdapter(private val context: Context, private val imageList: List
         fun bind(item: ItemDataClass) {
             Glide.with(context).load(item.imageUrl).into(binding.iv)
             val rupeeSymbol = context.getString(R.string.rupee_symbol)
-            val displayText = "${item.name}\n$rupeeSymbol ${item.price}"
+            val displayText = "${item.name}\n( $rupeeSymbol${item.price} / ${item.quantity} )"
             binding.tv.text = displayText
         }
     }
