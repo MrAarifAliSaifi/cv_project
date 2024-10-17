@@ -46,7 +46,7 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
     }
 
     private fun decideNextScreen() {
-        if (BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             startActivity(MainActivity.getStartIntent(this@SplashActivity))
         } else {
             lifecycleScope.launch {

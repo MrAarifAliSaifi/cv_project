@@ -1,6 +1,10 @@
 package com.example.cvproject.activites.activity.utilities
 
+import android.content.Context
+import android.view.View
+import android.widget.Toast
 import com.example.cvproject.activites.activity.dataclass.HomeItem
+import com.google.android.material.snackbar.Snackbar
 import cvproject.blinkit.R
 
 object Utils {
@@ -182,5 +186,26 @@ object Utils {
             itemList.add(HomeItem(name, imageResId, price))
         }
         return itemList
+    }
+
+    private var snackbar: Snackbar? = null
+
+    @JvmStatic
+    fun showToast(context: Context, message: String) {
+        Toast.makeText(context, message, Toast.LENGTH_LONG).show()
+    }
+
+    @JvmStatic
+    fun showSnackBar(message: String, view: View) {
+        Snackbar.make(view, message, Snackbar.LENGTH_LONG).show()
+    }
+
+    @JvmStatic
+    fun showPersistentSnackBar(message: String, view: View) {
+        val snackbar = Snackbar.make(view, message, Snackbar.LENGTH_INDEFINITE)
+        snackbar.setAction("Dismiss") {
+            snackbar.dismiss()
+        }
+        snackbar.show()
     }
 }
