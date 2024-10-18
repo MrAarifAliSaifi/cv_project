@@ -102,5 +102,9 @@ dependencies {
     implementation(libs.circle.image.view)
     // Swipe Refresh Layout
     implementation(libs.swipe.refresh.layout)
+    // Play services location
+    implementation(libs.play.service.location)
+    // Prefs
+    implementation(libs.prefs)
 
 }

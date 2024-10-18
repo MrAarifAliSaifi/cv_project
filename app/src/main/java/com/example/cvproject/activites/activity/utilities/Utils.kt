@@ -4,7 +4,12 @@ import android.content.Context
 import android.view.View
 import android.widget.Toast
 import com.example.cvproject.activites.activity.dataclass.HomeItem
+import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import cvproject.blinkit.R
 
 object Utils {
@@ -207,5 +212,29 @@ object Utils {
             snackbar.dismiss()
         }
         snackbar.show()
+    }
+
+    fun fetchItemDetailsById(
+        itemId: String?, callback: (String?, String?, String?, String?) -> Unit
+    ) {
+        val databaseReference = FirebaseDatabase.getInstance().getReference("BlinkitItems")
+        databaseReference.child(itemId!!).addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    val item = snapshot.getValue(ItemDataClass::class.java)
+                    if (item != null) {
+                        callback(item.name, item.price, item.quantity, item.imageUrl)
+                    } else {
+                        callback(null, null, null, null)
+                    }
+                } else {
+                    callback(null, null, null, null)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                callback(null, null, null, null)
+            }
+        })
     }
 }

@@ -34,7 +34,8 @@ databindingRuntime = "8.7.0"
 civ = "3.1.0"
 srl = "1.2.0-alpha01"
 gms = "4.4.2"
-
+location = "21.0.1"
+prefs = "1.10.0"
 
 [libraries]
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -72,6 +73,8 @@ annotation = { group = "androidx.annotation", name = "annotation", version.ref =
 androidx-databinding-runtime = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databindingRuntime" }
 circle-image-view = { group = "de.hdodenhof", name = "circleimageview", version.ref = "civ"}
 swipe-refresh-layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "srl"}
+play-service-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "location"}
+prefs = { group = "com.pixplicity.easyprefs", name = "EasyPrefs", version.ref = "prefs"}
 
 
 [plugins]
