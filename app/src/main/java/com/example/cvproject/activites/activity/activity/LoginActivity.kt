@@ -10,16 +10,25 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.viewpager2.widget.ViewPager2
+import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.adapters.ViewPagerAdapter
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.dataclass.OnboardingItem
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.viewmodeles.LoginActivityVM
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.FirebaseException
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthOptions
+import com.google.firebase.auth.PhoneAuthProvider
 import cvproject.blinkit.databinding.ActivityLoginBinding
+import java.util.concurrent.TimeUnit
 
 class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
     private val handler = Handler(Looper.getMainLooper())
+    private lateinit var auth: FirebaseAuth
+    private var verificationId: String? = null
     private val viewmodel: LoginActivityVM by viewModels()
     private lateinit var onboardingCarouselViewPagerAdapter: ViewPagerAdapter
     companion object {
@@ -40,6 +49,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
     }
 
     override fun setupUI(){
+        auth = FirebaseAuth.getInstance()
         checkLength()
         Utils.setStatusBarColour(this)
         setupViewPager(viewmodel.getOnboardingCarouselData(this))
@@ -51,8 +61,9 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
             if (mobileNumber.isEmpty()) {
                 Toast.makeText(this, "Please enter a valid mobile number", Toast.LENGTH_SHORT).show()
             } else {
-                val intent = OTPActivity.getStartIntent(this, mobileNumber)
-                startActivity(intent)
+
+                sendVerificationCode(mobileNumber)
+
             }
         }
 
@@ -106,5 +117,43 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
         })
 
         handler.post(runnable)
+    }
+
+    private fun sendVerificationCode(phoneNumber: String) {
+        val options = PhoneAuthOptions.newBuilder(auth)
+            .setPhoneNumber(phoneNumber)
+            .setTimeout(60L, TimeUnit.SECONDS)
+            .setActivity(this)
+            .setCallbacks(object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
+                override fun onVerificationCompleted(credential: PhoneAuthCredential) {
+                    signInWithCredential(credential)
+                }
+
+                override fun onVerificationFailed(e: FirebaseException) {
+                    Toast.makeText(this@LoginActivity, "Verification failed: ${e.message}", Toast.LENGTH_LONG).show()
+                }
+
+                override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
+                    this@LoginActivity.verificationId = verificationId
+                    Toast.makeText(this@LoginActivity, "OTP sent successfully", Toast.LENGTH_SHORT).show()
+                    val intent = OTPActivity.getStartIntent(this@LoginActivity, phoneNumber)
+                    startActivity(intent)
+                }
+            })
+            .build()
+        PhoneAuthProvider.verifyPhoneNumber(options)
+    }
+
+    private fun signInWithCredential(credential: PhoneAuthCredential) {
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(this, "Login successful", Toast.LENGTH_SHORT).show()
+                    val intent = MainActivity.getStartIntent(this)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 }
