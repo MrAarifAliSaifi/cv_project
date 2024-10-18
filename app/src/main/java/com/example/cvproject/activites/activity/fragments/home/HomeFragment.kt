@@ -1,5 +1,9 @@
 package cvproject.blinkit.activites.activity.ui.home
 
+import android.Manifest
+import android.content.pm.PackageManager
+import android.location.Geocoder
+import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -15,13 +19,19 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cvproject.activites.activity.adapters.HomeItemsAdapter
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.example.cvproject.activites.activity.utilities.Utils
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.FragmentHomeBinding
+import java.io.IOException
+import java.util.Locale
+import kotlin.random.Random
 
 class HomeFragment : Fragment() {
 
@@ -32,6 +42,8 @@ class HomeFragment : Fragment() {
     private val itemList = mutableListOf<ItemDataClass>()
     private val filteredList = mutableListOf<ItemDataClass>()
     private lateinit var databaseReference: DatabaseReference
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private val LOCATION_PERMISSION_REQUEST_CODE = 1000
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -47,6 +59,9 @@ class HomeFragment : Fragment() {
 
             setupRecyclerView()
             fetchItemsFromDatabase()
+
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+            checkLocationPermission()
 
             swipeRefreshLayout.setOnRefreshListener {
                 binding.swipeRefreshLayout.isRefreshing = true
@@ -66,8 +81,11 @@ class HomeFragment : Fragment() {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 requireActivity().window.statusBarColor =
-                    ContextCompat.getColor(requireContext(), R.color.freesia)
+                    ContextCompat.getColor(requireContext(), R.color.yellow_F7E0B4)
             }
+
+            val time = Random.nextInt(10, 21)
+            welcomeText.text = getString(R.string.minutes, time)
         }
     }
 
@@ -127,9 +145,71 @@ class HomeFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Utils.showToast(requireContext(), error.message)
+                Utils.showToast(requireActivity(), error.message)
             }
         })
+    }
+
+
+    private fun checkLocationPermission() {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions(
+                arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), LOCATION_PERMISSION_REQUEST_CODE
+            )
+        } else {
+            getCurrentLocation()
+        }
+    }
+
+
+    private fun getCurrentLocation() {
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+                location?.let {
+                    val latitude = it.latitude
+                    val longitude = it.longitude
+                    getAddressFromLocation(latitude, longitude)
+                } ?: run {
+                    Utils.showToast(requireContext(), "Unable to get location")
+                }
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int, permissions: Array<out String>, grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                getCurrentLocation()
+            } else {
+                Utils.showToast(requireContext(), "Location permission denied")
+            }
+        }
+    }
+
+    private fun getAddressFromLocation(latitude: Double, longitude: Double) {
+        val geocoder = Geocoder(requireContext(), Locale.getDefault())
+        try {
+            val addresses = geocoder.getFromLocation(latitude, longitude, 1)
+            if (addresses != null && addresses.isNotEmpty()) {
+                val address = addresses[0]
+                val addressString = address.getAddressLine(0)
+                binding.tvLocation.text = addressString
+                Prefs.putString("location", addressString)
+            } else {
+                Utils.showToast(requireContext(), "No address found")
+            }
+        } catch (e: IOException) {
+            Utils.showToast(requireContext(), e.localizedMessage)
+        }
     }
 
     override fun onDestroyView() {

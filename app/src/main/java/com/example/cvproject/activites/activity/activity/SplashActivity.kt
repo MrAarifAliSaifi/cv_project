@@ -8,7 +8,6 @@ import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.viewmodeles.SplashVM
 import com.google.firebase.BuildConfig
 import com.google.firebase.FirebaseApp
-
 import cvproject.blinkit.databinding.SpalshBindingBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
