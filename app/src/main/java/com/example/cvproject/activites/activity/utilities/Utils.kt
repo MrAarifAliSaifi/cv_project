@@ -1,10 +1,18 @@
 package com.example.cvproject.activites.activity.utilities
 
+import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.cvproject.activites.activity.dataclass.HomeItem
+import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import cvproject.blinkit.R
 
 object Utils {
@@ -222,7 +230,8 @@ object Utils {
         itemId: String?, callback: (String?, String?, String?, String?) -> Unit
     ) {
         val databaseReference = FirebaseDatabase.getInstance().getReference("BlinkitItems")
-        databaseReference.child(itemId!!).addListenerForSingleValueEvent(object : ValueEventListener {
+        databaseReference.child(itemId!!).addListenerForSingleValueEvent(object :
+            ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val item = snapshot.getValue(ItemDataClass::class.java)

@@ -73,7 +73,9 @@ annotation = { group = "androidx.annotation", name = "annotation", version.ref =
 androidx-databinding-runtime = { group = "androidx.databinding", name = "databinding-runtime", version.ref = "databindingRuntime" }
 circle-image-view = { group = "de.hdodenhof", name = "circleimageview", version.ref = "civ"}
 swipe-refresh-layout = { group = "androidx.swiperefreshlayout", name = "swiperefreshlayout", version.ref = "srl"}
-
+play-service-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "location"}
+prefs = { group = "com.pixplicity.easyprefs", name = "EasyPrefs", version.ref = "prefs"}
+androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version = "1.1.0" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
