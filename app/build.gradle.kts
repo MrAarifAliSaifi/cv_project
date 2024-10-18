@@ -51,6 +51,8 @@ dependencies {
     implementation(libs.lifecycle.livedata.ktx)
     implementation(libs.annotation)
     implementation(libs.androidx.databinding.runtime)
+    implementation(libs.legacy.support.v4)
+    implementation(libs.recyclerview)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

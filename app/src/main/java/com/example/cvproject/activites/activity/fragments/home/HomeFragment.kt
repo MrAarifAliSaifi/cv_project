@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cvproject.activites.activity.adapters.HomeItemsAdapter
+import com.example.cvproject.activites.activity.bottomSheet.ItemListDialogFragment
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -56,6 +57,9 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding?.apply {
+
+            val bottomSheet = ItemListDialogFragment()
+            bottomSheet.show(childFragmentManager, bottomSheet.tag)
 
             setupRecyclerView()
             fetchItemsFromDatabase()
