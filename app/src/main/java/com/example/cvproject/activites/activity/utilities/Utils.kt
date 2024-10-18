@@ -1,8 +1,12 @@
 package com.example.cvproject.activites.activity.utilities
 
+import android.app.Activity
 import android.content.Context
+import android.os.Build
 import android.view.View
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.cvproject.activites.activity.dataclass.HomeItem
 import com.google.android.material.snackbar.Snackbar
 import cvproject.blinkit.R
@@ -208,4 +212,13 @@ object Utils {
         }
         snackbar.show()
     }
+
+    fun setStatusBarColour(
+        activity: Activity,
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.window.statusBarColor = ContextCompat.getColor(activity, R.color.bright_yellow)
+        }
+    }
+
 }

@@ -66,4 +66,7 @@
     <string name="unable_to_access_image">Unable to access image</string>
     <string name="rupee_symbol">\u20B9</string>
     <string name="item_quantity">Item Quantity</string>
+    <string name="poweredby_zomato">poweredBy Zomato</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
