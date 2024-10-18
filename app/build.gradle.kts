@@ -1,8 +1,10 @@
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.services)
 }
+
 android {
     namespace = "cvproject.blinkit"
     compileSdk = 34
@@ -20,10 +22,6 @@ android {
     buildFeatures {
         viewBinding = true
         buildConfig = true
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 
     buildTypes {
@@ -104,6 +102,10 @@ dependencies {
     implementation(libs.circle.image.view)
     // Swipe Refresh Layout
     implementation(libs.swipe.refresh.layout)
+    // Play services location
+    implementation(libs.play.service.location)
+    // Prefs
+    implementation(libs.prefs)
     //viewpager
     implementation(libs.viewpager2)
 
