@@ -61,7 +61,6 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
             if (mobileNumber.isEmpty()) {
                 Toast.makeText(this, "Please enter a valid mobile number", Toast.LENGTH_SHORT).show()
             } else {
-
                 sendVerificationCode(mobileNumber)
 
             }
@@ -77,7 +76,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.btnSubmit.isEnabled = s?.length == 10
+                binding.btnSubmit.isEnabled = s?.length == 13
             }
             override fun afterTextChanged(s: Editable?) {}
         })
@@ -136,7 +135,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
                 override fun onCodeSent(verificationId: String, token: PhoneAuthProvider.ForceResendingToken) {
                     this@LoginActivity.verificationId = verificationId
                     Toast.makeText(this@LoginActivity, "OTP sent successfully", Toast.LENGTH_SHORT).show()
-                    val intent = OTPActivity.getStartIntent(this@LoginActivity, phoneNumber)
+                    val intent = OTPActivity.getStartIntent(this@LoginActivity, phoneNumber,verificationId)
                     startActivity(intent)
                 }
             })

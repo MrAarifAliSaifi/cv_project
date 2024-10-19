@@ -59,7 +59,7 @@
         android:background="@drawable/circular_bg"
         android:hint="@string/enter_your_mobile_number"
         android:inputType="phone"
-        android:maxLength="10"
+        android:maxLength="15"
         android:paddingStart="@dimen/_20sdp" />
 
     <Button
