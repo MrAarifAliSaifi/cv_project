@@ -73,4 +73,7 @@
     <string name="change">Change</string>
     <string name="delivering_to_home">Delivering to Home</string>
     <string name="total">TOTAL</string>
+    <string name="retry">Retry</string>
+    <string name="sorry_we_were_not_able_to_detect_your_location">Sorry, we were not able to detect your location</string>
+    <string name="saved_addresses">Saved Addresses</string>
 </resources>
