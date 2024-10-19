@@ -5,9 +5,11 @@ import androidx.activity.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
+import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.viewmodeles.SplashVM
 import com.google.firebase.BuildConfig
 import com.google.firebase.FirebaseApp
+import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.databinding.SpalshBindingBinding
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -64,6 +66,6 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
     }
 
     private fun isUserLoggedIn(): Boolean {
-        return false
+        return Prefs.getBoolean(BlinkitConstants.IS_LOGGED_IN)
     }
 }

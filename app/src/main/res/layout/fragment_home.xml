@@ -9,13 +9,13 @@
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_10sdp"
             android:layout_marginTop="@dimen/_10sdp"
             tools:listitem="@layout/home_list_items" />
@@ -70,8 +70,8 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="italic"
+                    android:textSize="@dimen/_11ssp"
+                    android:fontFamily="@font/open_sans_semibold"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/circle_iv"
                     app:layout_constraintStart_toStartOf="@id/blinkit_in"

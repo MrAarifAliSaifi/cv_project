@@ -2,14 +2,15 @@ package com.example.cvproject.activites.activity.activity
 
 import android.content.Context
 import android.content.Intent
-import android.text.TextWatcher
 import android.view.KeyEvent
 import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
+import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.textWatcher.TextWatcherWrapper
 import com.example.cvproject.activites.activity.viewmodeles.OtpActivityVM
+import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.OtpActivityBinding
 
@@ -38,7 +39,7 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
 
     override fun setupUI() {
         val mobileNumber = intent.getStringExtra(EXTRA_MOBILE_NUMBER)
-        binding.tvUserContact.text=mobileNumber
+        binding.tvUserContact.text = mobileNumber
     }
 
     override fun setupListeners() {
@@ -83,7 +84,9 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
         })
 
         binding.etTwo.setOnKeyListener { v, keyCode, event ->
-            if(keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && binding.etTwo.text?.trim().toString().isEmpty()){
+            if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && binding.etTwo.text?.trim()
+                    .toString().isEmpty()
+            ) {
                 binding.etOne.requestFocus()
             }
             false
@@ -113,7 +116,9 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
         })
 
         binding.etThree.setOnKeyListener { v, keyCode, event ->
-            if(keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && binding.etThree.text?.trim().toString().isEmpty()){
+            if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && binding.etThree.text?.trim()
+                    .toString().isEmpty()
+            ) {
                 binding.etTwo.requestFocus()
             }
             false
@@ -143,7 +148,9 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
         })
 
         binding.etFour.setOnKeyListener { v, keyCode, event ->
-            if(keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && binding.etFour.text?.trim().toString().isEmpty()){
+            if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && binding.etFour.text?.trim()
+                    .toString().isEmpty()
+            ) {
                 binding.etThree.requestFocus()
             }
             false
@@ -173,7 +180,9 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
         })
 
         binding.etFive.setOnKeyListener { v, keyCode, event ->
-            if(keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && binding.etFive.text?.trim().toString().isEmpty()){
+            if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && binding.etFive.text?.trim()
+                    .toString().isEmpty()
+            ) {
                 binding.etFour.requestFocus()
             }
             false
@@ -203,7 +212,9 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
         })
 
         binding.etSix.setOnKeyListener { v, keyCode, event ->
-            if(keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && binding.etSix.text?.trim().toString().isEmpty()){
+            if (keyCode == KeyEvent.KEYCODE_DEL && event.action == KeyEvent.ACTION_DOWN && binding.etSix.text?.trim()
+                    .toString().isEmpty()
+            ) {
                 binding.etFive.requestFocus()
             }
             false
@@ -214,16 +225,11 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
         }
 
         binding.btnSubmit.setOnClickListener {
-            if (binding.etOne.text.isNullOrBlank()
-                || binding.etTwo.text.isNullOrBlank()
-                || binding.etThree.text.isNullOrBlank()
-                || binding.etFour.text.isNullOrBlank()
-                || binding.etFive.text.isNullOrBlank()
-                || binding.etSix.text.isNullOrBlank()
-            ) {
+            if (binding.etOne.text.isNullOrBlank() || binding.etTwo.text.isNullOrBlank() || binding.etThree.text.isNullOrBlank() || binding.etFour.text.isNullOrBlank() || binding.etFive.text.isNullOrBlank() || binding.etSix.text.isNullOrBlank()) {
                 toastS(getString(R.string.msg_no_otp_provided))
             } else {
                 val mainIntent = MainActivity.getStartIntent(this)
+                Prefs.putBoolean(BlinkitConstants.IS_LOGGED_IN, true)
                 startActivity(mainIntent)
             }
         }

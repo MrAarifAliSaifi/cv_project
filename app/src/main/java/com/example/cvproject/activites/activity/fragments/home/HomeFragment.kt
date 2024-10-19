@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cvproject.activites.activity.adapters.HomeItemsAdapter
 import com.example.cvproject.activites.activity.bottomSheet.ItemListDialogFragment
+import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.google.android.gms.common.api.ResolvableApiException
@@ -233,7 +234,7 @@ class HomeFragment : Fragment() {
                 val address = addresses[0]
                 val addressString = address.getAddressLine(0)
                 binding.tvLocation.text = addressString
-                Prefs.putString("location", addressString)
+                Prefs.putString(BlinkitConstants.LOCATION, addressString)
             } else {
                 showNoAddressFoundDialog()
             }
