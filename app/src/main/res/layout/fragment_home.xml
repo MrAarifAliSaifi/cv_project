@@ -12,13 +12,35 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="@dimen/_10sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            tools:listitem="@layout/home_list_items" />
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_bestseller"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_5sdp"
+                android:layout_marginStart="@dimen/_15sdp"
+                android:fontFamily="@font/poppin_ssemi_bold"
+                android:text="@string/bestsellers"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_13ssp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_bestseller"
+                tools:listitem="@layout/home_list_items" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -54,9 +76,10 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/welcome_text"
+                    android:id="@+id/tv_delivery_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_extra_bold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold"
@@ -68,14 +91,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:ellipsize="end"
+                    android:fontFamily="@font/poppins_regular"
                     android:maxLines="2"
                     android:textColor="@color/black"
-                    android:textSize="@dimen/_12ssp"
-                    android:textStyle="italic"
+                    android:textSize="@dimen/_11ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/circle_iv"
                     app:layout_constraintStart_toStartOf="@id/blinkit_in"
-                    app:layout_constraintTop_toBottomOf="@id/welcome_text" />
+                    app:layout_constraintTop_toBottomOf="@id/tv_delivery_time" />
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/circle_iv"

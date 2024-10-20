@@ -2,6 +2,15 @@ package com.example.cvproject.activites.activity.utilities
 
 import android.app.Activity
 import android.content.Context
+import android.graphics.Typeface
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.os.Build
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
+import android.view.View
+import android.widget.Toast
 import android.os.Build
 import android.view.View
 import android.widget.Toast
@@ -13,188 +22,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import cvproject.blinkit.R
 
 object Utils {
-    fun getImageNameList(): List<HomeItem> {
-        val imageNameList = listOf(
-            "Ice Classic",
-            R.drawable.ice1,
-            "Ice Deluxe",
-            R.drawable.ice2,
-            "Ice Premium",
-            R.drawable.ice3,
-            "Maggi Classic",
-            R.drawable.magggi1,
-            "Maggi Spicy",
-            R.drawable.magggi3,
-            "Maggi Masala",
-            R.drawable.magggi4,
-            "Mango Fresh",
-            R.drawable.mangoes3,
-            "Top Ramen Original",
-            R.drawable.topramen,
-            "Top Ramen Spicy",
-            R.drawable.topramen1,
-            "Yippee Classic",
-            R.drawable.yippee1,
-            "Yippee Masala",
-            R.drawable.yippee2,
-            "Yippee Spicy",
-            R.drawable.yippee3,
-            "Ice Classic",
-            R.drawable.ice1,
-            "Ice Deluxe",
-            R.drawable.ice2,
-            "Ice Premium",
-            R.drawable.ice3,
-            "Maggi Classic",
-            R.drawable.magggi1,
-            "Maggi Spicy",
-            R.drawable.magggi3,
-            "Maggi Masala",
-            R.drawable.magggi4,
-            "Mango Fresh",
-            R.drawable.mangoes3,
-            "Top Ramen Original",
-            R.drawable.topramen,
-            "Top Ramen Spicy",
-            R.drawable.topramen1,
-            "Yippee Classic",
-            R.drawable.yippee1,
-            "Yippee Masala",
-            R.drawable.yippee2,
-            "Yippee Spicy",
-            R.drawable.yippee3,
-            "Ice Classic",
-            R.drawable.ice1,
-            "Ice Deluxe",
-            R.drawable.ice2,
-            "Ice Premium",
-            R.drawable.ice3,
-            "Maggi Classic",
-            R.drawable.magggi1,
-            "Maggi Spicy",
-            R.drawable.magggi3,
-            "Maggi Masala",
-            R.drawable.magggi4,
-            "Mango Fresh",
-            R.drawable.mangoes3,
-            "Top Ramen Classic",
-            R.drawable.topramen,
-            "Top Ramen Bold",
-            R.drawable.topramen1,
-            "Yippee Original",
-            R.drawable.yippee1,
-            "Yippee Tangy",
-            R.drawable.yippee2,
-            "Yippee Chatpata",
-            R.drawable.yippee3,
-            "Atta Whole Grain",
-            R.drawable.attta_two,
-            "Chili Red",
-            R.drawable.chili1,
-            "Chili Green",
-            R.drawable.chili2,
-            "Cornetto Chocolate",
-            R.drawable.corneto3,
-            "Cornetto Vanilla",
-            R.drawable.corneto_one,
-            "Cornetto Strawberry",
-            R.drawable.corneto_two,
-            "Dawat Basmati",
-            R.drawable.dawat,
-            "Dawat Special",
-            R.drawable.dawat1,
-            "Dawat Super",
-            R.drawable.dawat2,
-            "Homi Classic",
-            R.drawable.homi1,
-            "Homi Premium",
-            R.drawable.homi2,
-            "Homi Deluxe",
-            R.drawable.homi3,
-            "Homi Gourmet",
-            R.drawable.homi4,
-            "Top Ramen Supreme",
-            R.drawable.topramen1,
-            "Top Ramen Gourmet",
-            R.drawable.topramen,
-            "Top Ramen Premium",
-            R.drawable.topramen,
-            "Top Ramen Deluxe",
-            R.drawable.topramen1,
-            "Yippee Tandoori",
-            R.drawable.yippee1,
-            "Yippee Italian",
-            R.drawable.yippee2,
-            "Yippee Chinese",
-            R.drawable.yippee3,
-            "Ice Arctic",
-            R.drawable.ice1,
-            "Ice Glacier",
-            R.drawable.ice2,
-            "Ice Snow",
-            R.drawable.ice3,
-            "Maggi Classic",
-            R.drawable.magggi1,
-            "Maggi Chatpata",
-            R.drawable.magggi3,
-            "Maggi Hot",
-            R.drawable.magggi4,
-            "Mango Tropical",
-            R.drawable.mangoes3,
-            "Top Ramen Ultimate",
-            R.drawable.topramen,
-            "Top Ramen Special",
-            R.drawable.topramen1,
-            "Yippee Cheesy",
-            R.drawable.yippee1,
-            "Yippee Mexican",
-            R.drawable.yippee2,
-            "Yippee American",
-            R.drawable.yippee3,
-            "Atta Multigrain",
-            R.drawable.attta_two,
-            "Chili Yellow",
-            R.drawable.chili1,
-            "Chili Red Hot",
-            R.drawable.chili2,
-            "Cornetto Mint",
-            R.drawable.corneto3,
-            "Cornetto Almond",
-            R.drawable.corneto_one,
-            "Cornetto Caramel",
-            R.drawable.corneto_two,
-            "Dawat Royal",
-            R.drawable.dawat,
-            "Dawat Aroma",
-            R.drawable.dawat1,
-            "Dawat Chef Special",
-            R.drawable.dawat2,
-            "Homi Select",
-            R.drawable.homi1,
-            "Homi Delight",
-            R.drawable.homi2,
-            "Homi Rich",
-            R.drawable.homi3,
-            "Homi Elite",
-            R.drawable.homi4,
-            "Top Ramen Elite",
-            R.drawable.topramen1,
-            "Top Ramen Signature",
-            R.drawable.topramen
-        )
-
-        val itemList = mutableListOf<HomeItem>()
-        for (i in imageNameList.indices step 2) {
-            val name = imageNameList[i] as String
-            val imageResId = imageNameList[i + 1] as Int
-            val price = "@" + (50..200).random()
-            itemList.add(HomeItem(name, imageResId, price))
-        }
-        return itemList
-    }
 
     private var snackbar: Snackbar? = null
 
@@ -230,24 +59,48 @@ object Utils {
         itemId: String?, callback: (String?, String?, String?, String?) -> Unit
     ) {
         val databaseReference = FirebaseDatabase.getInstance().getReference("BlinkitItems")
-        databaseReference.child(itemId!!).addListenerForSingleValueEvent(object :
-            ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    val item = snapshot.getValue(ItemDataClass::class.java)
-                    if (item != null) {
-                        callback(item.name, item.price, item.quantity, item.imageUrl)
+        databaseReference.child(itemId!!)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                   if (snapshot.exists()) {
+                        val item = snapshot.getValue(ItemDataClass::class.java)
+                        if (item != null) {
+                            callback(item.name, item.price, item.quantity, item.imageUrl)
+                        } else {
+                            callback(null, null, null, null)
+                        }
                     } else {
                         callback(null, null, null, null)
                     }
-                } else {
+                }
+                
+                override fun onCancelled(error: DatabaseError) {
                     callback(null, null, null, null)
                 }
-            }
+            })
+    }
 
-            override fun onCancelled(error: DatabaseError) {
-                callback(null, null, null, null)
-            }
-        })
+    fun isInternetConnected(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false
+            val networkCapabilities =
+                connectivityManager.getNetworkCapabilities(network) ?: return false
+            return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+        } else {
+            val networkInfo = connectivityManager.activeNetworkInfo ?: return false
+            return networkInfo.isConnected
+        }
+    }
+
+    fun styleStrings(firstString: String): SpannableString {
+        val combinedString = "$firstString"
+        val spannableString = SpannableString(combinedString)
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD), 0, firstString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        return spannableString
     }
 }

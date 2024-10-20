@@ -2,6 +2,7 @@ package com.example.cvproject.activites.activity.activity
 
 import android.content.Context
 import android.content.Intent
+import android.text.TextUtils
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.cvproject.activites.activity.adapters.CheckoutAdapter
@@ -49,8 +50,11 @@ class CheckoutActivity : BaseActivity<ActivityCheckoutBinding, CheckoutActivityV
             header.xTitle.text = getString(R.string.checkout)
             val intent = intent
             itemId = intent.getStringExtra("itemId")
-            tvDeliveeringTo.text =
-                getString(R.string.delivering_to_home) + "\n" + Prefs.getString("location")
+            tvDeliveeringTo.text = TextUtils.concat(
+                Utils.styleStrings(getString(R.string.delivering_to_home)),
+                "\n",
+                Prefs.getString("location")
+            )
         }
         setUpRecyclerView()
         fetchData()
