@@ -1,19 +1,21 @@
 package com.example.cvproject.activites.activity.utilities
 
 import android.content.Context
+import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.StyleSpan
 import android.view.View
 import android.widget.Toast
-import com.example.cvproject.activites.activity.dataclass.HomeItem
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import cvproject.blinkit.R
 
 object Utils {
 
@@ -42,24 +44,25 @@ object Utils {
         itemId: String?, callback: (String?, String?, String?, String?) -> Unit
     ) {
         val databaseReference = FirebaseDatabase.getInstance().getReference("BlinkitItems")
-        databaseReference.child(itemId!!).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    val item = snapshot.getValue(ItemDataClass::class.java)
-                    if (item != null) {
-                        callback(item.name, item.price, item.quantity, item.imageUrl)
+        databaseReference.child(itemId!!)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val item = snapshot.getValue(ItemDataClass::class.java)
+                        if (item != null) {
+                            callback(item.name, item.price, item.quantity, item.imageUrl)
+                        } else {
+                            callback(null, null, null, null)
+                        }
                     } else {
                         callback(null, null, null, null)
                     }
-                } else {
+                }
+
+                override fun onCancelled(error: DatabaseError) {
                     callback(null, null, null, null)
                 }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                callback(null, null, null, null)
-            }
-        })
+            })
     }
 
     fun isInternetConnected(context: Context): Boolean {
@@ -75,5 +78,14 @@ object Utils {
             val networkInfo = connectivityManager.activeNetworkInfo ?: return false
             return networkInfo.isConnected
         }
+    }
+
+    fun styleStrings(firstString: String): SpannableString {
+        val combinedString = "$firstString"
+        val spannableString = SpannableString(combinedString)
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD), 0, firstString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+        return spannableString
     }
 }

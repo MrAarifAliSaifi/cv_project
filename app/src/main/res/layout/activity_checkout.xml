@@ -27,7 +27,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_110sdp"
+        android:layout_height="@dimen/_115sdp"
         android:background="@drawable/rounded_corner_background"
         android:backgroundTint="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -54,7 +54,6 @@
             android:maxLines="3"
             android:textColor="@color/black"
             android:textSize="@dimen/_11ssp"
-            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/cl_place_order"
             app:layout_constraintEnd_toStartOf="@+id/tv_change_address"
             app:layout_constraintStart_toEndOf="@id/iv_location"
@@ -109,6 +108,43 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/cl_payment_mode"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:minHeight="@dimen/_38sdp"
+            app:layout_constraintBottom_toBottomOf="@+id/cl_place_order"
+            app:layout_constraintEnd_toStartOf="@+id/cl_place_order"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/cl_place_order">
+
+            <ImageView
+                android:id="@+id/iv_pay_icon"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:background="@drawable/phone_pay"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_pay_using"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_5ssp"
+                android:fontFamily="@font/poppin_ssemi_bold"
+                android:gravity="start"
+                android:text="Pay Using Phone Pay"
+                android:textColor="@color/black"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintBottom_toBottomOf="@+id/iv_pay_icon"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/iv_pay_icon"
+                app:layout_constraintTop_toTopOf="@+id/iv_pay_icon" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

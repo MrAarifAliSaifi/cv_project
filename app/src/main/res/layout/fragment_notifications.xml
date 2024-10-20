@@ -39,11 +39,12 @@
                     android:id="@+id/x_user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_name"
-                    android:textSize="@dimen/_10ssp"
-                    android:textColor="@color/black"
-                    android:textStyle="bold"
                     android:layout_marginStart="@dimen/_14sdp"
+                    android:fontFamily="@font/poppins_bold"
+                    android:text="Ashish Mohan"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/_13ssp"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/x_image_view"
                     app:layout_constraintTop_toTopOf="@+id/x_image_view" />
 
@@ -51,22 +52,22 @@
                 <TextView
                     android:id="@+id/x_user_phone"
                     android:layout_width="wrap_content"
-                    android:layout_marginStart="@dimen/_14sdp"
-                    app:layout_constraintTop_toBottomOf="@+id/x_user_name"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:text="9336267840"
                     android:textColor="@color/black"
                     app:layout_constraintBottom_toBottomOf="@id/x_image_view"
                     app:layout_constraintStart_toEndOf="@+id/x_image_view"
-                    android:text="9336267840"/>
+                    app:layout_constraintTop_toBottomOf="@+id/x_user_name" />
 
                 <ImageView
                     android:id="@+id/iv_profile"
                     android:layout_width="@dimen/_14sdp"
                     android:layout_height="@dimen/_14sdp"
                     android:layout_marginEnd="@dimen/_14sdp"
+                    android:background="@drawable/baseline_arrow_forward_ios_24"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    android:background="@drawable/baseline_arrow_forward_ios_24"
                     app:layout_constraintTop_toTopOf="parent" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
@@ -77,14 +78,22 @@
             android:id="@+id/x_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_25sdp"
-            android:layout_marginHorizontal="@dimen/_6sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:layout_marginBottom="@dimen/_6sdp"
+            android:layout_margin="@dimen/_15sdp"
+            android:padding="@dimen/_5sdp"
+            android:background="@drawable/rounded_corner_background"
+            android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/x_card_view"
             tools:listitem="@layout/settings_item" />
+
+        <include
+            android:layout_height="@dimen/dp_0"
+            android:layout_width="match_parent"
+            layout="@layout/blinkit_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/x_recycler_view" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

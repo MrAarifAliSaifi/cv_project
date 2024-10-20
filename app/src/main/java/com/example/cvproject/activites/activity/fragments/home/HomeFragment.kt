@@ -10,6 +10,7 @@ import android.location.Location
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -34,6 +35,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.core.utilities.Utilities
 import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.FragmentHomeBinding
@@ -93,7 +95,7 @@ class HomeFragment : Fragment() {
             }
 
             val time = Random.nextInt(10, 21)
-            welcomeText.text = getString(R.string.minutes, time)
+            tvDeliveryTime.text = getString(R.string.minutes, time)
         }
     }
 
@@ -233,7 +235,7 @@ class HomeFragment : Fragment() {
             if (!addresses.isNullOrEmpty()) {
                 val address = addresses[0]
                 val addressString = address.getAddressLine(0)
-                binding.tvLocation.text = addressString
+                binding.tvLocation.text = TextUtils.concat(Utils.styleStrings(getString(R.string.title_home)), " - ", addressString)
                 Prefs.putString(BlinkitConstants.LOCATION, addressString)
             } else {
                 showNoAddressFoundDialog()

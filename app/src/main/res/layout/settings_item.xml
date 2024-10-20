@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/_16sdp"
         android:text=""
+        android:fontFamily="@font/poppins_regular"
         android:textColor="@color/black"
         android:textSize="@dimen/_10ssp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -46,9 +47,10 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:visibility="gone"
+        android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_1000"
+        android:layout_marginHorizontal="@dimen/_15sdp"
         android:background="@color/black"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

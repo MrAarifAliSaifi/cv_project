@@ -2,6 +2,7 @@ package com.example.cvproject.activites.activity.adapters
 
 import android.content.Context
 import android.graphics.Paint
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -27,14 +28,18 @@ class CheckoutAdapter(
             item: ItemDataClass, updatePriceCallback: () -> Unit
         ) {
             binding.apply {
-                textViewItemName.text =
-                    "${item.name}\n${context.getString(R.string.quantity, item.quantity)}"
-                tvDiscountedPrice.text = context.getString(R.string.rupee_symbol, item.price)
+                textViewItemName.text = TextUtils.concat(
+                    Utils.styleStrings(item.name!!),
+                    "\n",
+                    context.getString(R.string.quantity, item.quantity)
+                )
+                tvDiscountedPrice.text = " ${context.getString(R.string.rupee_symbol, item.price)}"
                 Glide.with(context).load(item.imageUrl).into(imageViewItemImage)
 
-                (context as? CheckoutActivity)?.findViewById<ConstraintLayout>(R.id.cl_place_order)?.setOnClickListener {
-                    Utils.showToast(context, "Yet to be Implemented")
-                }
+                (context as? CheckoutActivity)?.findViewById<ConstraintLayout>(R.id.cl_place_order)
+                    ?.setOnClickListener {
+                        Utils.showToast(context, "Yet to be Implemented")
+                    }
 
                 (context as? CheckoutActivity)?.findViewById<TextView>(R.id.tv_total_price)?.text =
                     context.getString(
