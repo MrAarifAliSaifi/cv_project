@@ -6,6 +6,7 @@ import androidx.lifecycle.lifecycleScope
 import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
+import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.viewmodeles.SplashVM
 import com.google.firebase.BuildConfig
 import com.google.firebase.FirebaseApp
@@ -37,6 +38,7 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
 //        }else {
 //            Toast.makeText(this, " not register", Toast.LENGTH_SHORT).show()
 //        }
+        Utils.setStatusBarColour(this)
         decideNextScreen()
     }
 
@@ -46,14 +48,13 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
     override fun observeViewModel() {
     }
 
-    private fun decideNextScreen() {
-        if (!BuildConfig.DEBUG) {
+    private fun decideNextScreen(){
+        if (BuildConfig.DEBUG) {
             startActivity(MainActivity.getStartIntent(this@SplashActivity))
         } else {
             lifecycleScope.launch {
                 delay(2000)
-
-                if (isUserLoggedIn()) {
+                if (isUserLoggedIn()){
                     val mainIntent = MainActivity.getStartIntent(this@SplashActivity)
                     startActivity(mainIntent)
                 } else {

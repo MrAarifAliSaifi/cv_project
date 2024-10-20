@@ -79,7 +79,7 @@ play-service-location = { group = "com.google.android.gms", name = "play-service
 prefs = { group = "com.pixplicity.easyprefs", name = "EasyPrefs", version.ref = "prefs"}
 legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacy-support-v4" }
 recyclerview = { group = "androidx.recyclerview", name = "recyclerview", version.ref = "recyclerview" }
-
+androidx-viewpager2 = { module = "androidx.viewpager2:viewpager2", version = "1.1.0" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

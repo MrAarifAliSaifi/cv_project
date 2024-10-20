@@ -1,5 +1,6 @@
 package com.example.cvproject.activites.activity.utilities
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
 import android.net.ConnectivityManager
@@ -10,6 +11,11 @@ import android.text.Spanned
 import android.text.style.StyleSpan
 import android.view.View
 import android.widget.Toast
+import android.os.Build
+import android.view.View
+import android.widget.Toast
+import androidx.core.content.ContextCompat
+import com.example.cvproject.activites.activity.dataclass.HomeItem
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
@@ -40,6 +46,15 @@ object Utils {
         snackbar.show()
     }
 
+    fun setStatusBarColour(
+        activity: Activity,
+    ) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            activity.window.statusBarColor = ContextCompat.getColor(activity, R.color.bright_yellow)
+        }
+    }
+
+
     fun fetchItemDetailsById(
         itemId: String?, callback: (String?, String?, String?, String?) -> Unit
     ) {
@@ -47,7 +62,7 @@ object Utils {
         databaseReference.child(itemId!!)
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
+                   if (snapshot.exists()) {
                         val item = snapshot.getValue(ItemDataClass::class.java)
                         if (item != null) {
                             callback(item.name, item.price, item.quantity, item.imageUrl)
@@ -58,7 +73,7 @@ object Utils {
                         callback(null, null, null, null)
                     }
                 }
-
+                
                 override fun onCancelled(error: DatabaseError) {
                     callback(null, null, null, null)
                 }

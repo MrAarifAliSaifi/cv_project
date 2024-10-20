@@ -11,20 +11,28 @@ import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.textWatcher.TextWatcherWrapper
 import com.example.cvproject.activites.activity.viewmodeles.OtpActivityVM
 import com.pixplicity.easyprefs.library.Prefs
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.PhoneAuthCredential
+import com.google.firebase.auth.PhoneAuthProvider
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.OtpActivityBinding
 
 class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
 
     private val viewmodel: OtpActivityVM by viewModels()
+    private lateinit var auth: FirebaseAuth
+    private var verificationId: String? = null
+
 
     companion object {
         const val TAG = "OTPActivity"
         private const val EXTRA_MOBILE_NUMBER = "mobile_number"
+        private const val EXTRA_VERIFICATION_ID = "verification_id"
 
-        fun getStartIntent(context: Context, mobileNumber: String): Intent {
+        fun getStartIntent(context: Context, mobileNumber: String,verificationID:String): Intent {
             return Intent(context, OTPActivity::class.java).apply {
                 putExtra(EXTRA_MOBILE_NUMBER, mobileNumber)
+                putExtra(EXTRA_VERIFICATION_ID, verificationID)
             }
         }
     }
@@ -38,7 +46,7 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
     }
 
     override fun setupUI() {
-        val mobileNumber = intent.getStringExtra(EXTRA_MOBILE_NUMBER)
+      val mobileNumber = intent.getStringExtra(EXTRA_MOBILE_NUMBER)
         binding.tvUserContact.text = mobileNumber
     }
 
@@ -250,6 +258,11 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
         }
     }
 
+    private fun getOtp(): String {
+        return binding.etOne.text.toString() + binding.etTwo.text.toString() + binding.etThree.text.toString() + binding.etFour.text.toString() + binding.etFive.text.toString() + binding.etSix.text.toString()
+    }
+
+
     private fun showVerifyButton() {
         binding.apply {
             btnSubmit.isEnabled = true
@@ -264,6 +277,24 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
 
     fun Context.toastS(message: String?) {
         if (!message.isNullOrEmpty()) Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun verifyCode(code: String) {
+        val credential = PhoneAuthProvider.getCredential(verificationId!!, code)
+        signInWithCredential(credential)
+    }
+
+
+    private fun signInWithCredential(credential: PhoneAuthCredential) {
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val intent = MainActivity.getStartIntent(this)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
 

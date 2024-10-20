@@ -1,4 +1,3 @@
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -108,5 +107,7 @@ dependencies {
     implementation(libs.play.service.location)
     // Prefs
     implementation(libs.prefs)
+    //viewPager
+    implementation(libs.androidx.viewpager2)
 
 }

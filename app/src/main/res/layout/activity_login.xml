@@ -2,14 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/iv_Large"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
-        android:src="@drawable/login_image" />
+        android:layout_height="wrap_content"
+        android:clipToPadding="false"
+        android:overScrollMode="never"
+        android:visibility="visible">
+    </androidx.viewpager2.widget.ViewPager2>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:tabBackground="@drawable/view_pager_selecter"
+        app:tabIndicatorHeight="@dimen/dp_0"
+        android:background="@color/transparent"
+        android:visibility="visible"/>
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_Small"
@@ -40,22 +53,22 @@
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_Mobile"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:paddingStart="@dimen/_20sdp"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="@dimen/_10sdp"
-        android:maxLength="10"
         android:background="@drawable/circular_bg"
         android:hint="@string/enter_your_mobile_number"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:maxLength="15"
+        android:paddingStart="@dimen/_20sdp" />
 
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:enabled="false"
+        android:layout_height="50dp"
         android:layout_marginHorizontal="@dimen/_15sdp"
         android:layout_marginTop="10dp"
+        android:enabled="false"
         android:text="@string/login" />
 
 </LinearLayout>

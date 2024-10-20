@@ -25,7 +25,7 @@
     <string name="login_and_signup">Login or signup</string>
     <string name="enter_your_mobile_number">Enter your mobile number</string>
     <string name="login">Login</string>
-    <string name="blinkit">Blinkit in</string>
+    <string name="blinkit">Blinkit</string>
 
 
     <!--OtpVerification Screen-->
@@ -64,7 +64,7 @@
     <string name="item_saved_successfully">Item saved successfully</string>
     <string name="failed_to_save_item">Failed to save item</string>
     <string name="unable_to_access_image">Unable to access image</string>
-    <string name="rupee_symbol">\u20B9%1$s</string>
+    <string name="rupee_symbol">\u20B9</string>
     <string name="item_quantity">Item Quantity</string>
     <string name="minutes">%1$s minutes</string>
     <string name="quantity">Qty- %1$s</string>
@@ -77,4 +77,7 @@
     <string name="sorry_we_were_not_able_to_detect_your_location">Sorry, we were not able to detect your location</string>
     <string name="saved_addresses">Saved Addresses</string>
     <string name="blinkit_text">India\'s Last Minute App ♥</string>
+    <string name="poweredby_zomato">poweredBy Zomato</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
