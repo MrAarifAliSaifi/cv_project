@@ -5,15 +5,13 @@ import android.content.Context
 import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
-import android.view.View
 import android.widget.Toast
 import android.os.Build
 import android.view.View
-import android.widget.Toast
+import cvproject.blinkit.R
 import androidx.core.content.ContextCompat
 import com.example.cvproject.activites.activity.dataclass.HomeItem
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass

@@ -53,6 +53,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
         checkLength()
         Utils.setStatusBarColour(this)
         setupViewPager(viewmodel.getOnboardingCarouselData(this))
+        binding.etMobile.setText("8755600408")
     }
 
     override fun setupListeners(){
@@ -61,7 +62,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
             if (mobileNumber.isEmpty()) {
                 Toast.makeText(this, "Please enter a valid mobile number", Toast.LENGTH_SHORT).show()
             } else {
-                sendVerificationCode(mobileNumber)
+                sendVerificationCode("+91" + mobileNumber)
 
             }
         }
@@ -76,7 +77,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                binding.btnSubmit.isEnabled = s?.length == 13
+                binding.btnSubmit.isEnabled = s?.length == 10
             }
             override fun afterTextChanged(s: Editable?) {}
         })
