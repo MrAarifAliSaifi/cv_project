@@ -6,10 +6,14 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
+import com.example.cvproject.activites.activity.activity.CheckoutActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
+import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.viewmodeles.MainActivityVM
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.ActivityMainBinding
 
@@ -35,9 +39,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
 
     override fun setupUI() {
         setupNavigation()
+        updateCartValues()
     }
 
     override fun setupListeners() {
+        binding.cartLayout.root.setOnClickListener {
+            startActivity(CheckoutActivity.getStartIntent(this@MainActivity))
+        }
     }
 
     override fun observeViewModel() {
@@ -47,5 +55,46 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
         val navView: BottomNavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         navView.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.navigation_home -> {
+                    showCartIcon()
+                    updateCartValues()
+                }
+
+                else  -> {
+                    hideCartIcon()
+                }
+            }
+        }
+    }
+
+    fun showCartIcon() {
+        Utils.animateView(binding.cartLayout.root)
+        if (Prefs.getBoolean(BlinkitConstants.IS_ITEM_ADDED, false)) {
+            binding.cartLayout.root.visibility = View.VISIBLE
+        }
+    }
+
+    fun hideCartIcon() {
+        binding.cartLayout.root.visibility = View.GONE
+    }
+
+    fun updateCartValues() {
+        Glide.with(this).load(Prefs.getString(BlinkitConstants.SELECTED_ITEM_IMAGE_URL))
+            .into(binding.cartLayout.imageViewItemImage)
+        binding.cartLayout.tvCartItemName.text =
+            Prefs.getString(BlinkitConstants.SELECTED_ITEM_DETAILS)
+    }
+
+    fun showBottomNavAndCart() {
+        binding.cartLayout.root.visibility = View.VISIBLE
+        binding.navView.visibility = View.VISIBLE
+    }
+
+    fun hideBottomNavAndCart() {
+        binding.cartLayout.root.visibility = View.GONE
+        binding.navView.visibility = View.GONE
     }
 }

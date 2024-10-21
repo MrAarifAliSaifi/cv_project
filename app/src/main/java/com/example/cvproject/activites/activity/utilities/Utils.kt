@@ -1,25 +1,26 @@
 package com.example.cvproject.activites.activity.utilities
 
+import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import android.os.Build
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
-import android.widget.Toast
-import android.os.Build
 import android.view.View
-import cvproject.blinkit.R
+import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.cvproject.activites.activity.dataclass.HomeItem
+import com.example.cvproject.activites.activity.dataBase.HomeItems
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import cvproject.blinkit.R
 
 object Utils {
 
@@ -53,29 +54,43 @@ object Utils {
     }
 
 
-    fun fetchItemDetailsById(
-        itemId: String?, callback: (String?, String?, String?, String?) -> Unit
+    fun fetchItemDetailsByUrls(
+        itemUrls: List<HomeItems>, callback: (List<ItemDataClass>) -> Unit
     ) {
         val databaseReference = FirebaseDatabase.getInstance().getReference("BlinkitItems")
-        databaseReference.child(itemId!!)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                   if (snapshot.exists()) {
-                        val item = snapshot.getValue(ItemDataClass::class.java)
-                        if (item != null) {
-                            callback(item.name, item.price, item.quantity, item.imageUrl)
-                        } else {
-                            callback(null, null, null, null)
+        val itemList = mutableListOf<ItemDataClass>()
+        var itemsProcessed = 0
+
+        if (itemUrls.isEmpty()) {
+            callback(itemList)
+            return
+        }
+
+        for (item in itemUrls) {
+            val itemUrl = item.itemIdGeneratedFromFirebase ?: continue
+            databaseReference.child(itemUrl)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            val item = snapshot.getValue(ItemDataClass::class.java)
+                            if (item != null) {
+                                itemList.add(item)
+                            }
                         }
-                    } else {
-                        callback(null, null, null, null)
+                        itemsProcessed++
+                        if (itemsProcessed == itemUrls.size) {
+                            callback(itemList)
+                        }
                     }
-                }
-                
-                override fun onCancelled(error: DatabaseError) {
-                    callback(null, null, null, null)
-                }
-            })
+
+                    override fun onCancelled(error: DatabaseError) {
+                        itemsProcessed++
+                        if (itemsProcessed == itemUrls.size) {
+                            callback(itemList)
+                        }
+                    }
+                })
+        }
     }
 
     fun isInternetConnected(context: Context): Boolean {
@@ -100,5 +115,19 @@ object Utils {
             StyleSpan(Typeface.BOLD), 0, firstString.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
         )
         return spannableString
+    }
+
+    fun animateView(viewToAnimate: View) {
+        // Translate from bottom to top
+        val animation = ObjectAnimator.ofFloat(
+            viewToAnimate,
+            "translationY",
+            viewToAnimate.height.toFloat(),
+            0f
+        )
+        // Set animation duration in milliseconds
+        animation.duration = 1000
+        animation.start()
+
     }
 }

@@ -3,6 +3,7 @@ package com.example.cvproject.activites.activity.adapters
 import android.content.Context
 import android.graphics.Paint
 import android.text.TextUtils
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
@@ -12,20 +13,32 @@ import com.bumptech.glide.Glide
 import com.example.cvproject.activites.activity.activity.CheckoutActivity
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.example.cvproject.activites.activity.utilities.Utils
+import com.example.cvproject.activites.activity.viewmodeles.CheckoutActivityVM
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.ListItemCheckoutBinding
 import kotlin.random.Random
 
 class CheckoutAdapter(
-    private val context: Context, private val itemList: MutableList<ItemDataClass>
+    private val context: Context,
+    private val itemList: MutableList<ItemDataClass>,
+    private val checkoutViewModel: CheckoutActivityVM
 ) : RecyclerView.Adapter<CheckoutAdapter.CheckItemsViewHolder>() {
 
+    init {
+        calculateTotalPrice(itemList)
+    }
+
     class CheckItemsViewHolder(
-        private val binding: ListItemCheckoutBinding, private val context: Context
+        private val binding: ListItemCheckoutBinding,
+        private val context: Context,
+        private val checkoutViewModel: CheckoutActivityVM
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            item: ItemDataClass, updatePriceCallback: () -> Unit
+            item: ItemDataClass,
+            itemList: MutableList<ItemDataClass>,
+            updatePriceCallback: () -> Unit,
+            removeItemCallback: (Int) -> Unit
         ) {
             binding.apply {
                 textViewItemName.text = TextUtils.concat(
@@ -59,6 +72,10 @@ class CheckoutAdapter(
                         textViewValue.text = quantity.toString()
                         item.quantity = quantity.toString()
                         updatePriceCallback()
+                    } else if (quantity == 1) {
+                        checkoutViewModel.deleteItemUrl(item.id!!)
+                        removeItemCallback(adapterPosition)
+                        updatePriceCallback()
                     }
                 }
 
@@ -75,13 +92,18 @@ class CheckoutAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CheckItemsViewHolder {
         val binding =
             ListItemCheckoutBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return CheckItemsViewHolder(binding, context)
+        return CheckItemsViewHolder(binding, context, checkoutViewModel)
     }
 
     override fun onBindViewHolder(holder: CheckItemsViewHolder, position: Int) {
         val item = itemList[position]
-        holder.bind(item) {
+        holder.bind(item, itemList, {
             calculateTotalPrice(itemList)
+        }) { position ->
+            // Remove the item from the list and notify the adapter
+            itemList.removeAt(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, itemList.size)
         }
     }
 
@@ -89,7 +111,7 @@ class CheckoutAdapter(
         return itemList.size
     }
 
-    private fun calculateTotalPrice(itemList: List<ItemDataClass>) {
+    fun calculateTotalPrice(itemList: List<ItemDataClass>) {
         val totalPrice = itemList.sumOf {
             val price = it.price!!.toIntOrNull() ?: 0
             val quantity = it.quantity!!.toIntOrNull() ?: 0

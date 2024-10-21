@@ -18,11 +18,11 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cvproject.activites.activity.adapters.HomeItemsAdapter
 import com.example.cvproject.activites.activity.bottomSheet.ItemListDialogFragment
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
+import com.example.cvproject.activites.activity.dataBase.BlinkitDatabase
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.google.android.gms.common.api.ResolvableApiException
@@ -35,7 +35,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.core.utilities.Utilities
 import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.FragmentHomeBinding
@@ -58,8 +57,10 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val database = BlinkitDatabase.getDatabase(requireContext())
+        val homePageItemsDao = database.blinkitDao()
+        homeViewModel = HomeViewModel(homePageItemsDao)
         return binding.root
     }
 
@@ -100,13 +101,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        adapter = HomeItemsAdapter(requireContext(), filteredList)
-        binding.recyclerView.adapter = adapter
+        binding.apply {
+            adapter = HomeItemsAdapter(requireContext(), filteredList, homeViewModel)
+            recyclerView.adapter = adapter
 
-        val staggeredGridLayoutManager =
-            StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        binding.recyclerView.layoutManager = staggeredGridLayoutManager
-        binding.recyclerView.isNestedScrollingEnabled = true
+            val staggeredGridLayoutManager =
+                StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
+            recyclerView.layoutManager = staggeredGridLayoutManager
+            recyclerView.isNestedScrollingEnabled = true
+        }
     }
 
     private fun setupSearchView() {
@@ -146,7 +149,6 @@ class HomeFragment : Fragment() {
                     val item = itemSnapshot.getValue(ItemDataClass::class.java)
                     if (item != null) {
                         itemList.add(item)
-                        Log.e("TAG", "HomeFragment Fetched item: ${item.name}")
                     }
                 }
                 filteredList.clear()
@@ -235,7 +237,9 @@ class HomeFragment : Fragment() {
             if (!addresses.isNullOrEmpty()) {
                 val address = addresses[0]
                 val addressString = address.getAddressLine(0)
-                binding.tvLocation.text = TextUtils.concat(Utils.styleStrings(getString(R.string.title_home)), " - ", addressString)
+                binding.tvLocation.text = TextUtils.concat(
+                    Utils.styleStrings(getString(R.string.title_home)), " - ", addressString
+                )
                 Prefs.putString(BlinkitConstants.LOCATION, addressString)
             } else {
                 showNoAddressFoundDialog()
@@ -275,6 +279,10 @@ class HomeFragment : Fragment() {
                 Log.e("TAG", "Location services are not enabled")
             }
         }
+    }
+
+    fun updateLocationText(location: String) {
+        binding.tvLocation.text = location
     }
 
     override fun onDestroyView() {
