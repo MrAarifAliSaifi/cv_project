@@ -117,6 +117,7 @@ object Utils {
         return spannableString
     }
 
+
     fun animateView(viewToAnimate: View) {
         // Translate from bottom to top
         val animation = ObjectAnimator.ofFloat(
@@ -128,6 +129,13 @@ object Utils {
         // Set animation duration in milliseconds
         animation.duration = 1000
         animation.start()
+    }
 
+    fun View.visible() {
+        this.visibility = View.VISIBLE
+    }
+
+    fun View.gone() {
+        this.visibility = View.GONE
     }
 }

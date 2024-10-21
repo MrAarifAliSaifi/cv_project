@@ -9,6 +9,8 @@ import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.textWatcher.TextWatcherWrapper
+import com.example.cvproject.activites.activity.utilities.Utils.gone
+import com.example.cvproject.activites.activity.utilities.Utils.visible
 import com.example.cvproject.activites.activity.viewmodeles.OtpActivityVM
 import com.pixplicity.easyprefs.library.Prefs
 import com.google.firebase.auth.FirebaseAuth
@@ -47,7 +49,9 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
 
     override fun setupUI() {
       val mobileNumber = intent.getStringExtra(EXTRA_MOBILE_NUMBER)
+       verificationId = intent.getStringExtra(EXTRA_VERIFICATION_ID)
         binding.tvUserContact.text = mobileNumber
+        auth = FirebaseAuth.getInstance()
     }
 
     override fun setupListeners() {
@@ -236,9 +240,8 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
             if (binding.etOne.text.isNullOrBlank() || binding.etTwo.text.isNullOrBlank() || binding.etThree.text.isNullOrBlank() || binding.etFour.text.isNullOrBlank() || binding.etFive.text.isNullOrBlank() || binding.etSix.text.isNullOrBlank()) {
                 toastS(getString(R.string.msg_no_otp_provided))
             } else {
-                val mainIntent = MainActivity.getStartIntent(this)
-                Prefs.putBoolean(BlinkitConstants.IS_LOGGED_IN, true)
-                startActivity(mainIntent)
+                binding.flProgressCircular.visible()
+                verifyCode(getOtp())
             }
         }
 
@@ -289,9 +292,11 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
         auth.signInWithCredential(credential)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    binding.flProgressCircular.gone()
                     val intent = MainActivity.getStartIntent(this)
                     startActivity(intent)
                 } else {
+                    binding.flProgressCircular.gone()
                     Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
                 }
             }
