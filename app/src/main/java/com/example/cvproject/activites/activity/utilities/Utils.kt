@@ -101,4 +101,12 @@ object Utils {
         )
         return spannableString
     }
+
+    fun View.visible() {
+        this.visibility = View.VISIBLE
+    }
+
+    fun View.gone() {
+        this.visibility = View.GONE
+    }
 }

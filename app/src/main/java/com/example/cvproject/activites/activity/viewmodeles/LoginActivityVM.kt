@@ -17,22 +17,23 @@ class LoginActivityVM: ViewModel() {
         return onboardingCarouselData.apply {
             onboardingCarouselData.add(
                 OnboardingItem(
-                    R.drawable.login_image
+                    R.drawable.ic_image_1
                 )
             )
             onboardingCarouselData.add(
                 OnboardingItem(
-                    R.drawable.login_image
+                    R.drawable.ic_image_2
+
                 )
             )
             onboardingCarouselData.add(
                 OnboardingItem(
-                    R.drawable.login_image
+                    R.drawable.ic_image_4
                 )
             )
             onboardingCarouselData.add(
                 OnboardingItem(
-                    R.drawable.login_image
+                    R.drawable.ic_image_3
                 )
             )
         }

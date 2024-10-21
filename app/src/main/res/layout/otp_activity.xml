@@ -189,4 +189,25 @@
         app:layout_constraintStart_toStartOf="@id/verticalGuideline4"
         app:layout_constraintTop_toBottomOf="@+id/clOtp" />
 
+    <FrameLayout
+        android:id="@+id/flProgressCircular"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparentColor"
+        android:clickable="false"
+        android:focusable="false"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="-85dp"
+        tools:layout_editor_absoluteY="-112dp"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="center"
+            android:theme="@style/ProgressBarStyle" />
+
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

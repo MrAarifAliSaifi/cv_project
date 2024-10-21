@@ -11,9 +11,15 @@ import cvproject.blinkit.R
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.room.util.findColumnIndexBySuffix
 import com.example.cvproject.activites.activity.activity.AdminActivity
+import com.example.cvproject.activites.activity.activity.LoginActivity
 import com.example.cvproject.activites.activity.adapters.NotificationAdapter
+import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.dataclass.ListItemNotification
+import com.example.cvproject.activites.activity.utilities.Utils
+import com.google.firebase.messaging.Constants
+import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.databinding.FragmentNotificationsBinding
 
 class NotificationsFragment : Fragment() {
@@ -90,6 +96,10 @@ class NotificationsFragment : Fragment() {
             getString(R.string.admin) -> {
                 startActivity(AdminActivity.getStartIntent(requireContext()))
             }
+
+            getString(R.string.logout) -> {
+                logout()
+            }
         }
     }
 
@@ -118,8 +128,16 @@ class NotificationsFragment : Fragment() {
                 """ ${shareMessage + "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID} """.trimIndent()
             shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
             startActivity(Intent.createChooser(shareIntent, "choose one"))
-        } catch (e: java.lang.Exception) {
+        } catch (_: java.lang.Exception) {
 
         }
+    }
+
+    private fun logout() {
+        Prefs.putBoolean(BlinkitConstants.IS_LOGGED_IN, false)
+        Prefs.remove(BlinkitConstants.Verification_ID)
+        val intent = LoginActivity.getStartIntent(requireContext())
+        startActivity(intent)
+        requireActivity().finish()
     }
 }
