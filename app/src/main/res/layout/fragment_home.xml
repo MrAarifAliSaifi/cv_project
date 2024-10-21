@@ -79,7 +79,7 @@
                     android:id="@+id/tv_delivery_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/poppins_extra_bold"
+                    android:fontFamily="@font/open_sans_semibold"
                     android:textColor="@color/black"
                     android:textSize="@dimen/_18sdp"
                     android:textStyle="bold"

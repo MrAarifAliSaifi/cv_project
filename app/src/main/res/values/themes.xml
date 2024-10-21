@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Base.Theme.Cvproject" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/green_1B7938</item>
+        <item name="colorPrimary">@color/yellow_F1C571</item>
         <item name="colorPrimaryVariant">@color/purple_200</item>
         <item name="colorOnPrimary">@color/white</item>
         <item name="colorSecondary">@color/teal_200</item>

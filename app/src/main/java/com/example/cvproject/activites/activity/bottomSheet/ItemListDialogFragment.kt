@@ -8,9 +8,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
+import cvproject.blinkit.activites.activity.ui.home.HomeFragment
 import cvproject.blinkit.databinding.FragmentItemListDialogListDialogBinding
 
 class ItemListDialogFragment : BottomSheetDialogFragment() {
@@ -41,7 +43,12 @@ class ItemListDialogFragment : BottomSheetDialogFragment() {
             }
             val addressList = listOf(Prefs.getString("location"))
             recyclerView.layoutManager = LinearLayoutManager(requireContext())
-            recyclerView.adapter = AddressAdapter(addressList) {
+            recyclerView.adapter = AddressAdapter(addressList) { address ->
+                val parentFragment = parentFragment as? HomeFragment
+                parentFragment?.let {
+                    it.updateLocationText(address)
+                    Prefs.putString(BlinkitConstants.LOCATION, address)
+                }
                 dismiss()
             }
         }

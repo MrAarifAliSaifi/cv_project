@@ -67,6 +67,6 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
     }
 
     private fun isUserLoggedIn(): Boolean {
-        return Prefs.getBoolean(BlinkitConstants.IS_LOGGED_IN)
+        return true
     }
 }
