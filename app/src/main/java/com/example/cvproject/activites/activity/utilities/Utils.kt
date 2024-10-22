@@ -12,7 +12,6 @@ import android.text.Spanned
 import android.text.style.StyleSpan
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.BounceInterpolator
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.cvproject.activites.activity.dataBase.HomeItems
@@ -120,13 +119,10 @@ object Utils {
     }
 
 
-    fun animateView(viewToAnimate: View) {
+    fun animateViewFromBottomToTop(viewToAnimate: View) {
         // Translate from bottom to top
         val animation = ObjectAnimator.ofFloat(
-            viewToAnimate,
-            "translationY",
-            viewToAnimate.height.toFloat(),
-            0f
+            viewToAnimate, "translationY", viewToAnimate.height.toFloat(), 0f
         )
         // Set animation duration in milliseconds
         animation.duration = 1000

@@ -117,18 +117,10 @@ class HomeFragment : Fragment() {
                     super.onScrolled(recyclerView, dx, dy)
                     if (dy > 0) {
                         // Scrolling down
-                        (context as MainActivity).showBottomNavAndCart()
-                    } else if (dy < 0) {
                         (context as MainActivity).hideBottomNavAndCart()
-                        // Scrolling up
-                    }
-                }
-
-                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                    super.onScrollStateChanged(recyclerView, newState)
-                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                        // The user has stopped scrolling
+                    } else if (dy < 0) {
                         (context as MainActivity).showBottomNavAndCart()
+                        // Scrolling up
                     }
                 }
             })

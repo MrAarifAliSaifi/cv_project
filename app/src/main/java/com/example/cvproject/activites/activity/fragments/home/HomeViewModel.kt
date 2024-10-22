@@ -1,11 +1,12 @@
 package cvproject.blinkit.activites.activity.ui.home
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.cvproject.activites.activity.dataBase.HomeItems
 import com.example.cvproject.activites.activity.dataBase.BlinkitDao
+import com.example.cvproject.activites.activity.dataBase.HomeItems
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val homePageItemsDao: BlinkitDao) : ViewModel() {

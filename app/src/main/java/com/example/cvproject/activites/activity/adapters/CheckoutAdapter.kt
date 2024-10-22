@@ -24,10 +24,6 @@ class CheckoutAdapter(
     private val checkoutViewModel: CheckoutActivityVM
 ) : RecyclerView.Adapter<CheckoutAdapter.CheckItemsViewHolder>() {
 
-    init {
-        calculateTotalPrice(itemList)
-    }
-
     class CheckItemsViewHolder(
         private val binding: ListItemCheckoutBinding,
         private val context: Context,
@@ -66,7 +62,7 @@ class CheckoutAdapter(
                 var quantity = item.quantity!!.toIntOrNull() ?: 1
                 textViewValue.text = quantity.toString()
 
-                minus.setOnClickListener {
+                buttonMinus.setOnClickListener {
                     if (quantity > 1) {
                         quantity--
                         textViewValue.text = quantity.toString()
@@ -104,6 +100,9 @@ class CheckoutAdapter(
             itemList.removeAt(position)
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, itemList.size)
+            if (itemList.isEmpty()) {
+                (context as CheckoutActivity).finish()
+            }
         }
     }
 
@@ -114,10 +113,11 @@ class CheckoutAdapter(
     fun calculateTotalPrice(itemList: List<ItemDataClass>) {
         val totalPrice = itemList.sumOf {
             val price = it.price!!.toIntOrNull() ?: 0
-            val quantity = it.quantity!!.toIntOrNull() ?: 0
+            val quantity = it.quantity!!.toIntOrNull() ?: 1
+            Log.e("TAG", "Price " + it.price + "qty " + it.quantity)
             price * quantity
         }
-
+        Log.e("TAG", "calculateTotalPrice: Adapter" + totalPrice)
         (context as? CheckoutActivity)?.findViewById<TextView>(R.id.tv_total_price)?.text =
             context.getString(
                 R.string.rupee_symbol, totalPrice.toString()

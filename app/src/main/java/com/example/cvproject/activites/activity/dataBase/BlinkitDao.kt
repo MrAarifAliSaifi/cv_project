@@ -18,7 +18,7 @@ interface BlinkitDao {
     @Query("SELECT * FROM itemsId")
     suspend fun getAllSavedItemUrl(): List<HomeItems>
 
-    @Query("SELECT * FROM itemsId WHERE id = :itemId")
+    @Query("SELECT * FROM itemsId WHERE itemIdGeneratedFromFirebase = :itemId")
     suspend fun getItemById(itemId: String): HomeItems?
 
 }

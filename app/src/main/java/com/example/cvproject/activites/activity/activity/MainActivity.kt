@@ -38,7 +38,13 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
     }
 
     override fun setupUI() {
-        setupNavigation()
+        if (Utils.isInternetConnected(this@MainActivity)) {
+            setupNavigation()
+        } else {
+            Utils.showPersistentSnackBar(
+                getString(R.string.err_msg_no_internet_connection), binding.root
+            )
+        }
     }
 
     override fun setupListeners() {
@@ -62,7 +68,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
                     updateCartValues()
                 }
 
-                else  -> {
+                else -> {
                     hideCartIcon()
                 }
             }
@@ -70,7 +76,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
     }
 
     fun showCartIcon() {
-        Utils.animateView(binding.cartLayout.root)
+        Utils.animateViewFromBottomToTop(binding.cartLayout.root)
         if (Prefs.getBoolean(BlinkitConstants.IS_ITEM_ADDED, false)) {
             binding.cartLayout.root.visibility = View.VISIBLE
         }
@@ -90,6 +96,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
     fun showBottomNavAndCart() {
         binding.cartLayout.root.visibility = View.VISIBLE
         binding.navView.visibility = View.VISIBLE
+        Utils.animateViewFromBottomToTop(binding.cartLayout.root)
+        Utils.animateViewFromBottomToTop(binding.navView)
     }
 
     fun hideBottomNavAndCart() {
