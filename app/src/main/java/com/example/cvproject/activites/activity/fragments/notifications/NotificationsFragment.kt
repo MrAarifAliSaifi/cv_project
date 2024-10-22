@@ -134,7 +134,7 @@ class NotificationsFragment : Fragment() {
     }
 
     private fun logout() {
-        Prefs.putBoolean(BlinkitConstants.IS_LOGGED_IN, false)
+        Prefs.remove(BlinkitConstants.IS_LOGGED_IN,)
         Prefs.remove(BlinkitConstants.Verification_ID)
         val intent = LoginActivity.getStartIntent(requireContext())
         startActivity(intent)

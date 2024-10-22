@@ -73,7 +73,7 @@
         android:background="@drawable/circular_bg"
         android:hint="@string/enter_your_mobile_number"
         android:inputType="phone"
-        android:maxLength="15"
+        android:maxLength="10"
         android:paddingStart="@dimen/_20sdp"
         app:layout_constraintTop_toBottomOf="@id/tv_login"
         app:layout_constraintStart_toStartOf="parent"

@@ -32,12 +32,6 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
 
     override fun setupUI() {
         FirebaseApp.initializeApp(this)
-//         val currentUser = FirebaseAuth.getInstance().currentUser
-//        if (currentUser != null) {
-//            Toast.makeText(this, "register", Toast.LENGTH_SHORT).show()
-//        }else {
-//            Toast.makeText(this, " not register", Toast.LENGTH_SHORT).show()
-//        }
         Utils.setStatusBarColour(this)
         decideNextScreen()
     }
@@ -48,25 +42,16 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
     override fun observeViewModel() {
     }
 
-    private fun decideNextScreen(){
-        if (BuildConfig.DEBUG) {
-            startActivity(MainActivity.getStartIntent(this@SplashActivity))
+    private fun decideNextScreen() {
+        val isLoggedIn = Prefs.getBoolean(BlinkitConstants.IS_LOGGED_IN,false)
+        if (isLoggedIn) {
+            val intent = MainActivity.getStartIntent(this)
+            startActivity(intent)
         } else {
-            lifecycleScope.launch {
-                delay(2000)
-                if (isUserLoggedIn()){
-                    val mainIntent = MainActivity.getStartIntent(this@SplashActivity)
-                    startActivity(mainIntent)
-                } else {
-                    val mainIntent = LoginActivity.getStartIntent(this@SplashActivity)
-                    startActivity(mainIntent)
-                }
-                finish()
-            }
+            val intent = LoginActivity.getStartIntent(this)
+            startActivity(intent)
         }
+        finish()
     }
 
-    private fun isUserLoggedIn(): Boolean {
-        return true
-    }
 }

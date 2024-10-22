@@ -125,6 +125,8 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
 
     private fun sendVerificationCode(phoneNumber: String) {
         binding.flProgressCircular.visible()
+        binding.etMobile.isEnabled=false
+        binding.btnSubmit.isEnabled=false
         val options = PhoneAuthOptions.newBuilder(auth)
             .setPhoneNumber(phoneNumber)
             .setTimeout(60L, TimeUnit.SECONDS)
@@ -146,9 +148,12 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
                     this@LoginActivity.verificationId = verificationId
                     Utils.showToast(this@LoginActivity, "Otp sent Successfully")
                     binding.flProgressCircular.gone()
+                    binding.etMobile.isEnabled=true
+
                     val intent =
                         OTPActivity.getStartIntent(this@LoginActivity, phoneNumber, verificationId)
                     startActivity(intent)
+                    finish()
                 }
             })
             .build()
@@ -161,11 +166,15 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
                 if (task.isSuccessful) {
                     Utils.showToast(this, "Login successful")
                     binding.flProgressCircular.gone()
+                    binding.etMobile.isEnabled=true
                     val intent = MainActivity.getStartIntent(this)
                     Prefs.putString(BlinkitConstants.Verification_ID, verificationId)
+                    Prefs.putBoolean(BlinkitConstants.IS_LOGGED_IN,true)
                     startActivity(intent)
+                    finish()
                 } else {
                     binding.flProgressCircular.gone()
+                    binding.etMobile.isEnabled=true
                     Utils.showToast(this, "Login Failed")
                 }
             }

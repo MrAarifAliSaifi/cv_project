@@ -9,6 +9,7 @@ import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.textWatcher.TextWatcherWrapper
+import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.utilities.Utils.gone
 import com.example.cvproject.activites.activity.utilities.Utils.visible
 import com.example.cvproject.activites.activity.viewmodeles.OtpActivityVM
@@ -31,7 +32,7 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
         private const val EXTRA_MOBILE_NUMBER = "mobile_number"
         private const val EXTRA_VERIFICATION_ID = "verification_id"
 
-        fun getStartIntent(context: Context, mobileNumber: String,verificationID:String): Intent {
+        fun getStartIntent(context: Context, mobileNumber: String, verificationID: String): Intent {
             return Intent(context, OTPActivity::class.java).apply {
                 putExtra(EXTRA_MOBILE_NUMBER, mobileNumber)
                 putExtra(EXTRA_VERIFICATION_ID, verificationID)
@@ -48,10 +49,11 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
     }
 
     override fun setupUI() {
-      val mobileNumber = intent.getStringExtra(EXTRA_MOBILE_NUMBER)
-       verificationId = intent.getStringExtra(EXTRA_VERIFICATION_ID)
+        val mobileNumber = intent.getStringExtra(EXTRA_MOBILE_NUMBER)
+        verificationId = intent.getStringExtra(EXTRA_VERIFICATION_ID)
         binding.tvUserContact.text = mobileNumber
         auth = FirebaseAuth.getInstance()
+        Utils.setStatusBarColour(this@OTPActivity)
     }
 
     override fun setupListeners() {
@@ -293,14 +295,20 @@ class OTPActivity : BaseActivity<OtpActivityBinding, OtpActivityVM>() {
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     binding.flProgressCircular.gone()
+                    Prefs.putBoolean(BlinkitConstants.IS_LOGGED_IN,true)
                     val intent = MainActivity.getStartIntent(this)
                     startActivity(intent)
                 } else {
                     binding.flProgressCircular.gone()
-                    Toast.makeText(this, "Login failed: ${task.exception?.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this,
+                        "Login failed: ${task.exception?.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
     }
+
 
 
 }
