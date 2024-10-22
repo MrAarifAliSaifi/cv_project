@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalGuideline4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.04" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/verticalGuideline96"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.96" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvVerification"
+        android:layout_width="@dimen/wrap_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_48"
+        android:autoSizeMaxTextSize="@dimen/_18sdp"
+        android:gravity="center"
+        android:text="@string/msg_verification"
+        android:textColor="@color/text_heading"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/verticalGuideline96"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuideline4"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEnterCode"
+        android:layout_width="@dimen/wrap_constraint"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:gravity="center"
+        android:text="@string/msg_enter_code"
+        android:textColor="@color/text_body_3D3D3D"
+        app:layout_constraintEnd_toEndOf="@id/verticalGuideline96"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuideline4"
+        app:layout_constraintTop_toBottomOf="@+id/tvVerification" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvUserContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_8"
+        android:textColor="@color/text_body_3D3D3D"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@id/ivEdit"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="@+id/verticalGuideline4"
+        app:layout_constraintTop_toBottomOf="@+id/tvEnterCode"
+        tools:text="7412820633" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_16"
+        android:layout_marginStart="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="@+id/tvUserContact"
+        app:layout_constraintEnd_toEndOf="@id/verticalGuideline96"
+        app:layout_constraintStart_toEndOf="@+id/tvUserContact"
+        app:layout_constraintTop_toTopOf="@+id/tvUserContact" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_20"
+        app:layout_constraintEnd_toEndOf="@id/verticalGuideline96"
+        app:layout_constraintStart_toStartOf="@id/verticalGuideline4"
+        app:layout_constraintTop_toBottomOf="@+id/tvUserContact">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etOne"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:autoSizeMaxTextSize="@dimen/font_size_20"
+            android:autoSizeMinTextSize="@dimen/font_size_20"
+            android:background="@drawable/bg_with_grey_corner"
+            android:gravity="center"
+            android:inputType="phone"
+            android:maxLength="1"
+            android:textColor="@color/text_body_3D3D3D"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="1" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etTwo"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginStart="@dimen/dp_8"
+            android:autoSizeMaxTextSize="@dimen/font_size_20"
+            android:autoSizeMinTextSize="@dimen/font_size_20"
+            android:background="@drawable/bg_with_grey_corner"
+            android:gravity="center"
+            android:inputType="phone"
+            android:textStyle="bold"
+            android:maxLength="1"
+            android:textColor="@color/text_body_3D3D3D"
+            app:layout_constraintStart_toEndOf="@id/etOne"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="2" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etThree"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginStart="@dimen/dp_8"
+            android:autoSizeMaxTextSize="@dimen/font_size_20"
+            android:autoSizeMinTextSize="@dimen/font_size_20"
+            android:background="@drawable/bg_with_grey_corner"
+            android:gravity="center"
+            android:inputType="phone"
+            android:maxLength="1"
+            android:textStyle="bold"
+            android:textColor="@color/text_body_3D3D3D"
+            app:layout_constraintStart_toEndOf="@id/etTwo"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="3" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etFour"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginStart="@dimen/dp_8"
+            android:autoSizeMaxTextSize="@dimen/font_size_20"
+            android:autoSizeMinTextSize="@dimen/font_size_20"
+            android:background="@drawable/bg_with_grey_corner"
+            android:gravity="center"
+            android:inputType="phone"
+            android:maxLength="1"
+            android:textStyle="bold"
+            android:textColor="@color/text_body_3D3D3D"
+            app:layout_constraintStart_toEndOf="@id/etThree"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="4" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etFive"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginStart="@dimen/dp_8"
+            android:autoSizeMaxTextSize="@dimen/font_size_20"
+            android:autoSizeMinTextSize="@dimen/font_size_20"
+            android:background="@drawable/bg_with_grey_corner"
+            android:gravity="center"
+            android:inputType="phone"
+            android:maxLength="1"
+            android:textStyle="bold"
+            android:textColor="@color/text_body_3D3D3D"
+            app:layout_constraintStart_toEndOf="@id/etFour"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="5" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etSix"
+            android:layout_width="@dimen/dp_48"
+            android:layout_height="@dimen/dp_48"
+            android:layout_marginStart="@dimen/dp_8"
+            android:autoSizeMaxTextSize="@dimen/font_size_20"
+            android:autoSizeMinTextSize="@dimen/font_size_20"
+            android:background="@drawable/bg_with_grey_corner"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:inputType="phone"
+            android:maxLength="1"
+            android:textColor="@color/text_body_3D3D3D"
+            app:layout_constraintStart_toEndOf="@id/etFive"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="6" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="@dimen/wrap_constraint"
+        android:layout_height="@dimen/dp_48"
+        android:layout_marginHorizontal="@dimen/dp_48"
+        android:layout_marginTop="@dimen/dp_32"
+        android:enabled="false"
+        android:text="@string/label_verify_otp"
+        app:layout_constraintEnd_toEndOf="@id/verticalGuideline96"
+        app:layout_constraintStart_toStartOf="@id/verticalGuideline4"
+        app:layout_constraintTop_toBottomOf="@+id/clOtp" />
+
+    <FrameLayout
+        android:id="@+id/flProgressCircular"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/transparentColor"
+        android:clickable="false"
+        android:focusable="false"
+        android:visibility="gone"
+        tools:layout_editor_absoluteX="-85dp"
+        tools:layout_editor_absoluteY="-112dp"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/dp_40"
+            android:layout_height="@dimen/dp_40"
+            android:layout_gravity="center"
+            android:theme="@style/ProgressBarStyle" />
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
