@@ -11,6 +11,8 @@ import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.animation.BounceInterpolator
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.cvproject.activites.activity.dataBase.HomeItems
@@ -128,6 +130,7 @@ object Utils {
         )
         // Set animation duration in milliseconds
         animation.duration = 1000
+        animation.interpolator = AccelerateDecelerateInterpolator()
         animation.start()
     }
 

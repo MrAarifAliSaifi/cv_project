@@ -39,7 +39,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
 
     override fun setupUI() {
         setupNavigation()
-        updateCartValues()
     }
 
     override fun setupListeners() {

@@ -162,7 +162,7 @@ class LoginActivity : BaseActivity<ActivityLoginBinding, LoginActivityVM>() {
                     Utils.showToast(this, "Login successful")
                     binding.flProgressCircular.gone()
                     val intent = MainActivity.getStartIntent(this)
-                    Prefs.putString(BlinkitConstants.VeriFcation_ID, verificationId)
+                    Prefs.putString(BlinkitConstants.Verification_ID, verificationId)
                     startActivity(intent)
                 } else {
                     binding.flProgressCircular.gone()

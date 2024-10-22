@@ -18,7 +18,9 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.adapters.HomeItemsAdapter
 import com.example.cvproject.activites.activity.bottomSheet.ItemListDialogFragment
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
@@ -109,6 +111,27 @@ class HomeFragment : Fragment() {
                 StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
             recyclerView.layoutManager = staggeredGridLayoutManager
             recyclerView.isNestedScrollingEnabled = true
+
+            recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (dy > 0) {
+                        // Scrolling down
+                        (context as MainActivity).showBottomNavAndCart()
+                    } else if (dy < 0) {
+                        (context as MainActivity).hideBottomNavAndCart()
+                        // Scrolling up
+                    }
+                }
+
+                override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                    super.onScrollStateChanged(recyclerView, newState)
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                        // The user has stopped scrolling
+                        (context as MainActivity).showBottomNavAndCart()
+                    }
+                }
+            })
         }
     }
 
