@@ -40,12 +40,10 @@ class CheckoutActivityVM(application: Application) : AndroidViewModel(applicatio
             itemToDelete?.let {
                 // Delete the fetched item
                 blinkitDao.deleteItemUrl(it)
-                Log.e("TAG", "called2")
                 // Fetch the updated list from the database after deletion
                 val urls = blinkitDao.getAllSavedItemUrl()
                 Utils.fetchItemDetailsByUrls(urls) { itemList ->
                     _itemUrls.postValue(itemList)
-                    Log.e("TAG", "called3")
                 }
             }
         }

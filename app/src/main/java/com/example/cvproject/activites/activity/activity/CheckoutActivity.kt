@@ -3,6 +3,7 @@ package com.example.cvproject.activites.activity.activity
 import android.content.Context
 import android.content.Intent
 import android.text.TextUtils
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
