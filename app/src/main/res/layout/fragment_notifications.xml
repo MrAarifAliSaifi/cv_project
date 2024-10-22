@@ -30,6 +30,7 @@
                     android:id="@+id/x_image_view"
                     android:layout_width="@dimen/_31sdp"
                     android:layout_height="@dimen/_31sdp"
+                    android:padding="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_14sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

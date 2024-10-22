@@ -4,12 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_5sdp"
-    android:minHeight="@dimen/_80sdp">
+    android:minHeight="@dimen/_60sdp">
 
     <ImageView
         android:id="@+id/image_view_item_image"
-        android:layout_width="@dimen/_60sdp"
-        android:layout_height="@dimen/_60sdp"
+        android:layout_width="@dimen/_50sdp"
+        android:layout_height="@dimen/_50sdp"
         android:layout_margin="@dimen/_10sdp"
         android:background="@drawable/rounded_corner_background"
         android:backgroundTint="@color/sky_blue"
@@ -42,7 +42,7 @@
         app:layout_constraintTop_toTopOf="@id/text_view_item_name">
 
         <Button
-            android:id="@+id/minus"
+            android:id="@+id/buttonMinus"
             android:layout_width="@dimen/_10sdp"
             android:layout_height="@dimen/_10sdp"
             android:layout_marginStart="@dimen/_10sdp"
@@ -64,7 +64,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/buttonPlus"
-            app:layout_constraintStart_toEndOf="@+id/minus"
+            app:layout_constraintStart_toEndOf="@+id/buttonMinus"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button

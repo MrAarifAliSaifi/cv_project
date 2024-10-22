@@ -52,7 +52,7 @@ class NotificationsFragment : Fragment() {
                     R.drawable.ic_notifications_black_24dp_outlined
                 ),
                 ListItemNotification(getString(R.string.about_us), R.drawable.info),
-                ListItemNotification(getString(R.string.admin), R.drawable.baseline_child_care_24)
+                ListItemNotification(getString(R.string.admin), R.drawable.profile)
             )
 
             adapter = NotificationAdapter(requireContext(), dataList) { item ->
@@ -60,7 +60,7 @@ class NotificationsFragment : Fragment() {
             }
             xRecyclerView.adapter = adapter
             xRecyclerView.layoutManager = LinearLayoutManager(requireContext())
-            xImageView.background = resources.getDrawable(R.drawable.app_icon)
+            xImageView.background = resources.getDrawable(R.drawable.profile)
         }
     }
 
