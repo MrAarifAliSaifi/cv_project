@@ -47,7 +47,6 @@
     <string name="logout">Logout</string>
     <string name="notification">Notification</string>
     <string name="about_us">About Us</string>
-    <string name="home_shastri_nagar_colony_gorakhnath_gorakhpur">Home - Shastri Nagar Colony Gorakhnath Gorakhpur, Uttar Pardesh</string>
     <string name="blinkit_in">Blinkit in</string>
     <string name="admin">Admin</string>
     <string name="search_mango">Search Mango</string>
@@ -78,7 +77,8 @@
     <string name="saved_addresses">Saved Addresses</string>
     <string name="blinkit_text">India\'s Last Minute App ♥</string>
     <string name="poweredby_zomato">poweredBy Zomato</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dismiss">Dismiss</string>
     <string name="item_removed">%1$s Removed</string>
+    <string name="save_address">Save Address</string>
+    <string name="please_enter_location_first">Please Enter Location First</string>
 </resources>
