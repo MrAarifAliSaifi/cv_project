@@ -7,11 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.cvproject.activites.activity.adapters.CategoryAdapter
 import com.example.cvproject.activites.activity.adapters.ItemAdapter
+import com.example.cvproject.activites.activity.dataBase.BlinkitDatabase
+import com.example.cvproject.activites.activity.dataBase.HomeItems
 import cvproject.blinkit.databinding.FragmentCategoryBinding
+import kotlinx.coroutines.launch
 
 class CategoryFragment : Fragment() {
 
@@ -41,7 +45,7 @@ class CategoryFragment : Fragment() {
         categoryAdapter = CategoryAdapter(requireContext(), emptyList()) { selectedCategory ->
             categoryViewModel.filterItemsByCategory(selectedCategory)
         }
-        itemAdapter = ItemAdapter(requireContext(), emptyList())
+        itemAdapter = ItemAdapter(this, emptyList())
     }
 
     private fun setUpRecyclerView() {
@@ -67,6 +71,13 @@ class CategoryFragment : Fragment() {
         categoryViewModel.filteredItems.observe(viewLifecycleOwner) { filteredItems ->
             Log.d("CategoryFragment", "Filtered items count: ${filteredItems.size}")
             itemAdapter.updateItems(filteredItems)
+        }
+    }
+
+    fun insertItemToDb(itemId: String) {
+        val database = BlinkitDatabase.getDatabase(requireContext()).blinkitDao()
+        lifecycleScope.launch {
+            database.insertItemUrl(HomeItems(itemIdGeneratedFromFirebase = itemId))
         }
     }
 
