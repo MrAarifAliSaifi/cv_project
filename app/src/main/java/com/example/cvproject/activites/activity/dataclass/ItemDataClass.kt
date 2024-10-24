@@ -8,3 +8,9 @@ data class ItemDataClass(
     val imageUrl: String? = ""
 )
 
+data class CategoryDataClass(
+    val name: String = "",
+    val categoryImageUrl: String = "",
+    val items: List<ItemDataClass> = emptyList()
+)
+

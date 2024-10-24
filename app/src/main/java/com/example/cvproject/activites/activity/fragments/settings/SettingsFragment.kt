@@ -11,29 +11,26 @@ import cvproject.blinkit.R
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.room.util.findColumnIndexBySuffix
 import com.example.cvproject.activites.activity.activity.AdminActivity
 import com.example.cvproject.activites.activity.activity.LoginActivity
 import com.example.cvproject.activites.activity.adapters.NotificationAdapter
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.dataclass.ListItemNotification
-import com.example.cvproject.activites.activity.utilities.Utils
-import com.google.firebase.messaging.Constants
 import com.pixplicity.easyprefs.library.Prefs
-import cvproject.blinkit.databinding.FragmentNotificationsBinding
+import cvproject.blinkit.databinding.FragmentSettingsBinding
 
-class NotificationsFragment : Fragment() {
+class SettingsFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
+    private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private var adapter: NotificationAdapter? = null
-    private lateinit var viewModel: NotificationsViewModel
+    private lateinit var viewModel: SettingsViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this).get(NotificationsViewModel::class.java)
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
+        _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = binding.root
         return root
     }

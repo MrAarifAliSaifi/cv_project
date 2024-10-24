@@ -6,7 +6,7 @@
     android:padding="@dimen/_10sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl_bottom"
+        android:id="@+id/cl_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_2sdp"
@@ -54,6 +54,7 @@
                 android:layout_marginEnd="@dimen/_5sdp"
                 android:backgroundTint="@color/green_1B7938"
                 android:text="@string/retry"
+                android:fontFamily="sans-serif-condensed"
                 android:textColor="@color/white"
                 android:textSize="@dimen/_8ssp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -73,11 +74,11 @@
         android:layout_marginTop="@dimen/_10sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:text="@string/saved_addresses"
-        android:textStyle="bold"
-        android:textSize="@dimen/_11ssp"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@id/cl_bottom"
-        app:layout_constraintTop_toBottomOf="@id/cl_bottom" />
+        android:textSize="@dimen/_11ssp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/cl_top"
+        app:layout_constraintTop_toBottomOf="@id/cl_top" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
@@ -86,11 +87,52 @@
         android:layout_margin="@dimen/_10sdp"
         android:background="@drawable/rounded_corner_background"
         android:backgroundTint="@color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_saved_addresses"
         tools:listitem="@layout/list_item_location" />
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/text_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recycler_view">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_text_location"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:hint="Enter Location"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_add_manual_address"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_45sdp"
+        android:layout_marginTop="@dimen/_35sdp"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:text="@string/save_address"
+        android:textColor="@color/white"
+        android:fontFamily="sans-serif-condensed"
+        android:backgroundTint="@color/green_1B7938"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_input_layout" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_add_manual_address"
+        app:layout_constraintEnd_toEndOf="@+id/btn_add_manual_address"
+        app:layout_constraintStart_toStartOf="@+id/btn_add_manual_address"
+        app:layout_constraintTop_toTopOf="@+id/btn_add_manual_address" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
