@@ -58,7 +58,8 @@ object Utils {
     fun fetchItemDetailsByUrls(
         itemUrls: List<HomeItems>, callback: (List<ItemDataClass>) -> Unit
     ) {
-        val databaseReference = FirebaseDatabase.getInstance().getReference("BlinkitItems")
+        val databaseReference =
+            FirebaseDatabase.getInstance().getReference("BlinkitItems").child("All").child("Items")
         val itemList = mutableListOf<ItemDataClass>()
         var itemsProcessed = 0
 

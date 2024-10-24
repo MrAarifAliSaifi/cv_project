@@ -64,7 +64,7 @@
     <string name="item_saved_successfully">Item saved successfully</string>
     <string name="failed_to_save_item">Failed to save item</string>
     <string name="unable_to_access_image">Unable to access image</string>
-    <string name="rupee_symbol">\u20B9 %1$s</string>
+    <string name="rupee_symbol">\u20B9%1$s</string>
     <string name="item_quantity">Item Quantity</string>
     <string name="minutes">%1$s minutes</string>
     <string name="quantity">Qty- %1$s</string>
@@ -84,4 +84,5 @@
     <string name="please_enter_location_first">Please Enter Location First</string>
     <string name="item_catrgory">Item Category</string>
     <string name="select_category">Select Category</string>
+    <string name="add">ADD</string>
 </resources>

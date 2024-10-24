@@ -68,6 +68,11 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
                     updateCartValues()
                 }
 
+                R.id.navigation_dashboard -> {
+                    showCartIcon()
+                    updateCartValues()
+                }
+
                 else -> {
                     hideCartIcon()
                 }
