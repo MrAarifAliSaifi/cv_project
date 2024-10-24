@@ -13,13 +13,13 @@
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="cvproject.blinkit.activites.activity.ui.dashboard.DashboardFragment"
+        android:name="cvproject.blinkit.activites.activity.ui.dashboard.CategoryFragment"
         android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        tools:layout="@layout/fragment_category" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="cvproject.blinkit.activites.activity.ui.notifications.NotificationsFragment"
+        android:name="cvproject.blinkit.activites.activity.ui.notifications.SettingsFragment"
         android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        tools:layout="@layout/fragment_settings" />
 </navigation>

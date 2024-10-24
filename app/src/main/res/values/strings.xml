@@ -2,7 +2,7 @@
     <string name="app_name">cvproject</string>
     <string name="title_activity_main">Blinkit</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Category</string>
     <string name="title_notifications">Settings</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_login">LoginActivity</string>
@@ -58,6 +58,7 @@
     <string name="item_price_can_t_be_empty">Item price can\'t be empty</string>
     <string name="item_quantity_can_t_be_empty">Item quantity can\'t be empty</string>
     <string name="select_image_first_to_proceed_further">Select Image First To Proceed Further</string>
+    <string name="select_category_image_first_to_proceed_further">Select Category Image First To Proceed Further</string>
     <string name="permission_denied_can_t_access_gallery">Permission denied can\'t access gallery</string>
     <string name="add_image">Add Image</string>
     <string name="item_saved_successfully">Item saved successfully</string>
@@ -81,4 +82,6 @@
     <string name="item_removed">%1$s Removed</string>
     <string name="save_address">Save Address</string>
     <string name="please_enter_location_first">Please Enter Location First</string>
+    <string name="item_catrgory">Item Category</string>
+    <string name="select_category">Select Category</string>
 </resources>

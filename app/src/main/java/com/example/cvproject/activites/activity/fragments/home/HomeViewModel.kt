@@ -39,7 +39,8 @@ class HomeViewModel(
     fun fetchItemsFromDatabase() {
         viewModelScope.launch(Dispatchers.IO) {
             itemsList.clear()
-            val reference = firebaseDatabase.getReference("BlinkitItems")
+            val reference =
+                firebaseDatabase.getReference("BlinkitItems").child("All").child("Items")
             reference.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (itemSnapshot in snapshot.children) {
