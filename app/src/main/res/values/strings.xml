@@ -2,7 +2,7 @@
     <string name="app_name">cvproject</string>
     <string name="title_activity_main">Blinkit</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
+    <string name="title_dashboard">Category</string>
     <string name="title_notifications">Settings</string>
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_activity_login">LoginActivity</string>
@@ -47,7 +47,6 @@
     <string name="logout">Logout</string>
     <string name="notification">Notification</string>
     <string name="about_us">About Us</string>
-    <string name="home_shastri_nagar_colony_gorakhnath_gorakhpur">Home - Shastri Nagar Colony Gorakhnath Gorakhpur, Uttar Pardesh</string>
     <string name="blinkit_in">Blinkit in</string>
     <string name="admin">Admin</string>
     <string name="search_mango">Search Mango</string>
@@ -59,12 +58,13 @@
     <string name="item_price_can_t_be_empty">Item price can\'t be empty</string>
     <string name="item_quantity_can_t_be_empty">Item quantity can\'t be empty</string>
     <string name="select_image_first_to_proceed_further">Select Image First To Proceed Further</string>
+    <string name="select_category_image_first_to_proceed_further">Select Category Image First To Proceed Further</string>
     <string name="permission_denied_can_t_access_gallery">Permission denied can\'t access gallery</string>
     <string name="add_image">Add Image</string>
     <string name="item_saved_successfully">Item saved successfully</string>
     <string name="failed_to_save_item">Failed to save item</string>
     <string name="unable_to_access_image">Unable to access image</string>
-    <string name="rupee_symbol">\u20B9 %1$s</string>
+    <string name="rupee_symbol">\u20B9%1$s</string>
     <string name="item_quantity">Item Quantity</string>
     <string name="minutes">%1$s minutes</string>
     <string name="quantity">Qty- %1$s</string>
@@ -78,7 +78,11 @@
     <string name="saved_addresses">Saved Addresses</string>
     <string name="blinkit_text">India\'s Last Minute App ♥</string>
     <string name="poweredby_zomato">poweredBy Zomato</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="dismiss">Dismiss</string>
     <string name="item_removed">%1$s Removed</string>
+    <string name="save_address">Save Address</string>
+    <string name="please_enter_location_first">Please Enter Location First</string>
+    <string name="item_catrgory">Item Category</string>
+    <string name="select_category">Select Category</string>
+    <string name="add">ADD</string>
 </resources>

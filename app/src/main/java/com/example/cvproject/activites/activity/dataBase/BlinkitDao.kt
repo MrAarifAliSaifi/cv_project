@@ -21,4 +21,13 @@ interface BlinkitDao {
     @Query("SELECT * FROM itemsId WHERE itemIdGeneratedFromFirebase = :itemId")
     suspend fun getItemById(itemId: String): HomeItems?
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAddress(address: SavedAddresses)
+
+    @Query("SELECT * FROM savedAddressesTable")
+    suspend fun getAllSavedAddresses(): List<SavedAddresses>
+
+    // Check that similer address is not present
+    @Query("SELECT COUNT(*) FROM savedAddressesTable WHERE LOWER(:name) LIKE '%' || LOWER(:name) || '%'")
+    fun getSimilarItemCount(name: String): Int
 }

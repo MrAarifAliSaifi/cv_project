@@ -4,22 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.cvproject.activites.activity.base.BaseActivity
+import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.viewmodeles.AdminActivityVM
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.storage.FirebaseStorage
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.ActivityAdminBinding
-import java.util.UUID
 
 class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
 
     private val adminViewModel: AdminActivityVM by viewModels()
     private var selectedImageUri: Uri? = null
+    private var categoryImageUri: Uri? = null
+    private var categoryName: String? = "All"
 
     companion object {
         const val TAG = "AdminActivity"
@@ -37,18 +40,35 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
     }
 
     override fun setupUI() {
-
+        initializeSpinner()
     }
 
     override fun setupListeners() {
         binding.apply {
             xHeader.xTitle.text = getString(R.string.admin)
             buttonAddImage.setOnClickListener {
-                openGallery()
+                openGalleryForItemImage()
+            }
+            buttonAddImageCategory.setOnClickListener {
+                openGalleryForCategoryImage()
             }
             buttonSaveImage.setOnClickListener {
                 if (validateFields()) {
-                    uploadItemToFirebase()
+                    val itemName = binding.editTextItemName.text.toString().trim()
+                    val itemPrice = binding.editTextItemPrice.text.toString().trim()
+                    val itemQuantity = binding.editTextItemQuantity.text.toString().trim()
+                    val selectedImageUri = selectedImageUri
+                    val categoryImageUri = categoryImageUri
+                    val categoryName = categoryName
+
+                    viewModel.uploadItemToFirebase(
+                        itemName,
+                        itemPrice,
+                        itemQuantity,
+                        selectedImageUri,
+                        categoryName!!,
+                        categoryImageUri
+                    )
                 }
             }
             xHeader.xBack.setOnClickListener {
@@ -58,7 +78,31 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
     }
 
     override fun observeViewModel() {
-        // Observe any LiveData from the ViewModel here if needed
+        viewModel.uploadStatus.observe(this, Observer { status ->
+            when (status) {
+                BlinkitConstants.UPLOADING -> showProgress()
+                BlinkitConstants.ITEM_SAVED_SUCCESSFULLY -> {
+                    hideProgress()
+                    Utils.showToast(this, "Item saved successfully")
+                    finish()
+                }
+
+                BlinkitConstants.FAILED_TO_UPLOAD_IMAGE -> {
+                    hideProgress()
+                    Utils.showToast(this, "Failed to upload image")
+                }
+
+                BlinkitConstants.FAILED_TO_SAVE_ITEM -> {
+                    hideProgress()
+                    Utils.showToast(this, "Failed to save item")
+                }
+
+                BlinkitConstants.NO_IMAGE_SELECTED -> {
+                    hideProgress()
+                    Utils.showToast(this, "Please select an image")
+                }
+            }
+        })
     }
 
     private fun validateFields(): Boolean {
@@ -92,60 +136,28 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
             }
         }
 
-    private fun openGallery() {
+    private val pickCategoryImageLauncher =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { pickedUri ->
+            if (pickedUri != null) {
+                this.categoryImageUri = pickedUri
+                binding.apply {
+                    Glide.with(this@AdminActivity).load(categoryImageUri).into(imageViewCategory)
+                }
+            }
+        }
+
+    private fun openGalleryForItemImage() {
         pickImageLauncher.launch("image/*")
     }
 
-    private fun uploadItemToFirebase() {
-        showProgress()
-        val itemName = binding.editTextItemName.text.toString().trim()
-        val itemPrice = binding.editTextItemPrice.text.toString().trim()
-        val itemQuantity = binding.editTextItemQuantity.text.toString().trim()
-
-        val storageReference = FirebaseStorage.getInstance().reference
-        val imageRef = storageReference.child("Images/${UUID.randomUUID()}.jpg")
-        imageRef.putFile(selectedImageUri!!).addOnSuccessListener { taskSnapshot ->
-            imageRef.downloadUrl.addOnSuccessListener { downloadUri ->
-                // Get the download URL and save the item data
-                saveItemDataToDatabase(itemName, itemPrice, itemQuantity, downloadUri.toString())
-            }
-        }.addOnFailureListener {
-            hideProgress()
-            Utils.showToast(this, getString(R.string.failed_to_save_item))
-        }
-    }
-
-    private fun saveItemDataToDatabase(
-        name: String,
-        price: String,
-        quantity: String,
-        imageUrl: String
-    ) {
-        val databaseReference = FirebaseDatabase.getInstance().reference.child("BlinkitItems")
-        val itemId = databaseReference.push().key
-
-        val itemData = mapOf(
-            "id" to itemId,
-            "name" to name,
-            "price" to price,
-            "quantity" to quantity,
-            "imageUrl" to imageUrl
-        )
-
-        // Save the item data to Firebase Realtime Database
-        databaseReference.child(itemId!!).setValue(itemData).addOnSuccessListener {
-            Utils.showToast(this, getString(R.string.item_saved_successfully))
-            this@AdminActivity.finish()
-            hideProgress()
-        }.addOnFailureListener {
-            hideProgress()
-            Utils.showToast(this, getString(R.string.failed_to_save_item))
-        }
+    private fun openGalleryForCategoryImage() {
+        pickCategoryImageLauncher.launch("image/*")
     }
 
     private fun showProgress() {
         binding.apply {
             buttonAddImage.visibility = View.INVISIBLE
+            buttonAddImageCategory.visibility = View.INVISIBLE
             progressBar.visibility = View.VISIBLE
             buttonSaveImage.visibility = View.INVISIBLE
         }
@@ -154,8 +166,42 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
     private fun hideProgress() {
         binding.apply {
             buttonAddImage.visibility = View.VISIBLE
+            buttonAddImageCategory.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
             buttonSaveImage.visibility = View.VISIBLE
+        }
+    }
+
+    private fun initializeSpinner() {
+        val categories = listOf(
+            "All",
+            "Soap and Beauty",
+            "Beverages",
+            "Cereals",
+            "Fruits & Vegetables",
+            "Dairy & Eggs",
+            "Snacks & Confectionery",
+            "Household Essentials"
+        )
+        // Adapter for Spinner
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, categories)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinner.adapter = adapter
+
+        binding.spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?, view: View?, position: Int, id: Long
+            ) {
+                val selectedCategory = categories[position]
+                if (selectedCategory != "All") {
+                    categoryName = selectedCategory
+                    binding.clRight.visibility = View.VISIBLE
+                } else {
+                    binding.clRight.visibility = View.GONE
+                }
+            }
+
+            override fun onNothingSelected(p0: AdapterView<*>?) {}
         }
     }
 }

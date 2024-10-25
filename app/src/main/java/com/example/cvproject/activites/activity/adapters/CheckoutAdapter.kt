@@ -11,9 +11,11 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.cvproject.activites.activity.activity.CheckoutActivity
+import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.viewmodeles.CheckoutActivityVM
+import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.ListItemCheckoutBinding
 import kotlin.random.Random
@@ -103,6 +105,12 @@ class CheckoutAdapter(
             if (itemList.isEmpty()) {
                 (context as CheckoutActivity).finish()
             }
+        }
+
+        if (itemList.size == 0) {
+            Prefs.remove(BlinkitConstants.SELECTED_ITEM_DETAILS)
+            Prefs.remove(BlinkitConstants.SELECTED_ITEM_IMAGE_URL)
+            Prefs.remove(BlinkitConstants.IS_ITEM_ADDED)
         }
     }
 
