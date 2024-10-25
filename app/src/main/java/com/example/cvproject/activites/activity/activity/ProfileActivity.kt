@@ -10,10 +10,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
+import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.dataBase.BlinkitDatabase
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.viewmodeles.ProfileVM
 import com.example.cvproject.activites.activity.viewmodeles.profileVMFactory
+import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.databinding.ProfileActivityBinding
 
 class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileVM>() {
@@ -72,16 +74,17 @@ class ProfileActivity : BaseActivity<ProfileActivityBinding, ProfileVM>() {
     private fun submitProfile() {
         val name = binding.etName.text.toString()
         if (name.isEmpty()) {
-            Toast.makeText(this, "Please enter your name", Toast.LENGTH_SHORT).show()
+            Utils.showToast(this,"Please enter your name")
             return
         }
         if (selectedImageUri == null) {
-            Toast.makeText(this, "Please upload a profile image", Toast.LENGTH_SHORT).show()
+            Utils.showToast(this,"Please upload a profile image")
             return
         }
 
         viewmodel.saveUserInfo(name, selectedImageUri.toString())
-        Toast.makeText(this, "Profile submitted successfully!", Toast.LENGTH_SHORT).show()
+        Utils.showToast(this,"Profile submitted successfully!")
+        Prefs.putBoolean(BlinkitConstants.IS_PROFILE_COMPLETED,true)
         moveToMainActivity()
     }
 

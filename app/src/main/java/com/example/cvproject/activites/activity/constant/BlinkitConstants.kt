@@ -15,4 +15,5 @@ object BlinkitConstants {
     const val FAILED_TO_SAVE_ALL_CATEGORY = "Failed to save all category"
     const val NO_IMAGE_SELECTED = "No image selected"
     const val FAILED_TO_UPLOAD_CATEGORY_IMAGE = "Failed to upload category image"
+    const val IS_PROFILE_COMPLETED = "is_profile_completed"
 }

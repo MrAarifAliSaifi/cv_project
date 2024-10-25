@@ -9,6 +9,7 @@ import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.dataBase.BlinkitDao
 import com.example.cvproject.activites.activity.dataBase.HomeItems
 import com.example.cvproject.activites.activity.dataBase.SavedAddresses
+import com.example.cvproject.activites.activity.dataBase.UserInfo
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -27,6 +28,10 @@ class HomeViewModel(
     val itemList: LiveData<List<ItemDataClass>> get() = _itemList
     private val itemsList = mutableListOf<ItemDataClass>()
 
+    private  val _userInfo=MutableLiveData<UserInfo>()
+    val userInfo:LiveData<UserInfo> get() = _userInfo
+
+
     private val _saveAddress = MutableLiveData<List<SavedAddresses>>()
     val saveAddress: LiveData<List<SavedAddresses>> get() = _saveAddress
 
@@ -36,6 +41,15 @@ class HomeViewModel(
     fun saveItemUrl(itemId: String) {
         viewModelScope.launch {
             blinkitDao.insertItemUrl(HomeItems(itemIdGeneratedFromFirebase = itemId))
+        }
+    }
+
+
+
+    fun fetchUserInfo() {
+        viewModelScope.launch {
+            val user = blinkitDao.getUserInfo()
+            _userInfo.postValue(user)
         }
     }
 

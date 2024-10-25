@@ -20,9 +20,11 @@ import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.bumptech.glide.Glide
 import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.adapters.HomeItemsAdapter
 import com.example.cvproject.activites.activity.bottomSheet.ItemListDialogFragment
@@ -53,7 +55,6 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var homeViewModel: HomeViewModel
-    private val viewModel: MainActivityVM by activityViewModels()
     private lateinit var adapter: HomeItemsAdapter
     private val itemList = mutableListOf<ItemDataClass>()
     private val filteredList = mutableListOf<ItemDataClass>()
@@ -67,14 +68,14 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val database = BlinkitDatabase.getDatabase(requireContext())
         val homePageItemsDao = database.blinkitDao()
-//        homeViewModel = HomeViewModel(homePageItemsDao)
+        homeViewModel = HomeViewModel(homePageItemsDao,FirebaseDatabase.getInstance())
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding?.apply {
-
+             homeViewModel.fetchUserInfo()
             setupRecyclerView()
             fetchItemsFromDatabase()
             setupUserdetail()
@@ -311,10 +312,13 @@ class HomeFragment : Fragment() {
         _binding = null
     }
 
-    private fun setupUserdetail(){
-        viewModel.userInfo.observe(viewLifecycleOwner) { data ->
+   private fun setupUserdetail(){
+        homeViewModel.userInfo.observe(viewLifecycleOwner) { data ->
             if (data != null) {
-                Toast.makeText(requireContext(), "${data.name}", Toast.LENGTH_SHORT).show()
+                binding.blinkitIn.text= data.name
+                Glide.with(binding.circleIv.context)
+                    .load(data.imageUri)
+                    .into(binding.circleIv)
             }
         }
     }

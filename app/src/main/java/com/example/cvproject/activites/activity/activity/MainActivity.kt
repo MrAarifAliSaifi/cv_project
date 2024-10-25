@@ -46,8 +46,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
     }
 
     override fun setupUI() {
-        val database = BlinkitDatabase.getDatabase(this)
-        viewmodel.fetchUserInfo()
         if (Utils.isInternetConnected(this@MainActivity)) {
             setupNavigation()
         } else {
@@ -55,8 +53,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
                 getString(R.string.err_msg_no_internet_connection), binding.root
             )
         }
-        completeProfileDalog()
-
+        checkUserProfileCompletion()
     }
 
     override fun setupListeners() {
@@ -65,11 +62,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
         }
     }
 
-    override fun observeViewModel() {
-        viewModel.userInfo.observe(this) { userInfo ->
-            if (userInfo ==null) {}
-        }
-    }
+    override fun observeViewModel() {}
 
     private fun setupNavigation() {
         val navView: BottomNavigationView = binding.navView
@@ -145,4 +138,12 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
     private fun moveTpProfileScreen() {
         startActivity(Intent(ProfileActivity.getStartIntent(this)))
     }
+
+    private fun checkUserProfileCompletion() {
+        val isProfileComplete = Prefs.getBoolean(BlinkitConstants.IS_PROFILE_COMPLETED, false)
+        if (!isProfileComplete) {
+            completeProfileDalog()
+        }
+    }
 }
+

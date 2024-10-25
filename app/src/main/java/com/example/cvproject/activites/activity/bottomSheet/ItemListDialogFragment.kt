@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.cvproject.activites.activity.dataBase.SavedAddresses
@@ -60,6 +61,7 @@ class ItemListDialogFragment(private val homeViewModel: HomeViewModel) :
                 dismiss()
             }
             setUpRecyclerView()
+
 
             btnAddManualAddress.setOnClickListener {
                 if (editTextLocation.text.toString().trim().isEmpty()) {
