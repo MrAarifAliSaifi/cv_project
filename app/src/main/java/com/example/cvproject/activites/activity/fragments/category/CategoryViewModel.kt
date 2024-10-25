@@ -16,13 +16,16 @@ class CategoryViewModel : ViewModel() {
 
     private val database: DatabaseReference = FirebaseDatabase.getInstance().reference
 
-
     private val _categoryItems = MutableLiveData<List<CategoryDataClass>>()
     val categoryItems: LiveData<List<CategoryDataClass>> get() = _categoryItems
 
     private val _allItems = MutableLiveData<List<ItemDataClass>>()
+
     private val _filteredItems = MutableLiveData<List<ItemDataClass>>()
     val filteredItems: LiveData<List<ItemDataClass>> get() = _filteredItems
+
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
 
     init {
         loadCategoriesFromFirebase()
@@ -30,6 +33,7 @@ class CategoryViewModel : ViewModel() {
     }
 
     private fun loadCategoriesFromFirebase() {
+        _isLoading.postValue(true)
         val databaseReference = FirebaseDatabase.getInstance().getReference("BlinkitItems")
         databaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -57,9 +61,11 @@ class CategoryViewModel : ViewModel() {
                     categories.add(category)
                 }
                 _categoryItems.postValue(categories)
+                _isLoading.postValue(false)
             }
 
             override fun onCancelled(databaseError: DatabaseError) {
+                _isLoading.postValue(false)
                 Log.w(
                     "CategoryViewModel", "loadCategories:onCancelled", databaseError.toException()
                 )
@@ -68,6 +74,7 @@ class CategoryViewModel : ViewModel() {
     }
 
     private fun loadItems() {
+        _isLoading.postValue(true)
         database.child("BlinkitItems").addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val itemList = mutableListOf<ItemDataClass>()
@@ -86,10 +93,11 @@ class CategoryViewModel : ViewModel() {
                 }
                 _allItems.value = itemList
                 _filteredItems.value = itemList
+                _isLoading.postValue(false)
             }
 
             override fun onCancelled(error: DatabaseError) {
-                // Handle error
+                _isLoading.postValue(false)
             }
         })
     }

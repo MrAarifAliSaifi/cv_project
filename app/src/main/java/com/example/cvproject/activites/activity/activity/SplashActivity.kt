@@ -8,7 +8,6 @@ import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.viewmodeles.SplashVM
-import com.google.firebase.BuildConfig
 import com.google.firebase.FirebaseApp
 import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.databinding.SpalshBindingBinding
@@ -48,21 +47,17 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
     override fun observeViewModel() {
     }
 
-    private fun decideNextScreen(){
-        if (BuildConfig.DEBUG) {
-            startActivity(MainActivity.getStartIntent(this@SplashActivity))
-        } else {
-            lifecycleScope.launch {
-                delay(2000)
-                if (isUserLoggedIn()){
-                    val mainIntent = MainActivity.getStartIntent(this@SplashActivity)
-                    startActivity(mainIntent)
-                } else {
-                    val mainIntent = LoginActivity.getStartIntent(this@SplashActivity)
-                    startActivity(mainIntent)
-                }
-                finish()
+    private fun decideNextScreen() {
+        lifecycleScope.launch {
+            delay(2000)
+            if (isUserLoggedIn()) {
+                val mainIntent = MainActivity.getStartIntent(this@SplashActivity)
+                startActivity(mainIntent)
+            } else {
+                val mainIntent = LoginActivity.getStartIntent(this@SplashActivity)
+                startActivity(mainIntent)
             }
+            finish()
         }
     }
 

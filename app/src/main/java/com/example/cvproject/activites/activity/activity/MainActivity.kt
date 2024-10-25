@@ -100,7 +100,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
 
     fun showBottomNavAndCart() {
         if (Prefs.getString(BlinkitConstants.SELECTED_ITEM_DETAILS).isNotEmpty() &&
-            Prefs.getString(BlinkitConstants.SELECTED_ITEM_IMAGE_URL).isNotEmpty()) {
+            Prefs.getString(BlinkitConstants.SELECTED_ITEM_IMAGE_URL).isNotEmpty()
+        ) {
             binding.cartLayout.root.visibility = View.VISIBLE
             Utils.animateViewFromBottomToTop(binding.cartLayout.root)
         }

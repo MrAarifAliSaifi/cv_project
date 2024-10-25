@@ -9,7 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.adapters.CategoryAdapter
 import com.example.cvproject.activites.activity.adapters.ItemAdapter
 import com.example.cvproject.activites.activity.dataBase.BlinkitDatabase
@@ -49,17 +51,48 @@ class CategoryFragment : Fragment() {
     }
 
     private fun setUpRecyclerView() {
-        binding.recyclerViewCategory.apply {
-            adapter = categoryAdapter
-            layoutManager = LinearLayoutManager(requireContext())
-        }
-        binding.recyclerViewItem.apply {
-            adapter = itemAdapter
-            layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        binding.apply {
+            recyclerViewCategory.apply {
+                adapter = categoryAdapter
+                layoutManager = LinearLayoutManager(requireContext())
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        if (dy > 0) {
+                            // Scrolling down
+                            (context as MainActivity).hideBottomNavAndCart()
+                        } else if (dy < 0) {
+                            (context as MainActivity).showBottomNavAndCart()
+                            // Scrolling up
+                        }
+                    }
+                })
+            }
+            recyclerViewItem.apply {
+                adapter = itemAdapter
+                layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+                addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                        super.onScrolled(recyclerView, dx, dy)
+                        if (dy > 0) {
+                            // Scrolling down
+                            (context as MainActivity).hideBottomNavAndCart()
+                        } else if (dy < 0) {
+                            (context as MainActivity).showBottomNavAndCart()
+                            // Scrolling up
+                        }
+                    }
+                })
+            }
         }
     }
 
     private fun observeViewModel() {
+
+        categoryViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) showLoading() else hideLoading()
+        }
+
         categoryViewModel.categoryItems.observe(viewLifecycleOwner) { categories ->
             categoryAdapter.updateCategories(categories)
             if (categories.isNotEmpty()) {
@@ -78,6 +111,24 @@ class CategoryFragment : Fragment() {
         val database = BlinkitDatabase.getDatabase(requireContext()).blinkitDao()
         lifecycleScope.launch {
             database.insertItemUrl(HomeItems(itemIdGeneratedFromFirebase = itemId))
+        }
+    }
+
+    private fun showLoading() {
+        binding.apply {
+            shimmerLayout.visibility = View.VISIBLE
+            shimmerLayout.startShimmer()
+            recyclerViewCategory.visibility = View.GONE
+            recyclerViewItem.visibility = View.GONE
+        }
+    }
+
+    private fun hideLoading() {
+        binding.apply {
+            shimmerLayout.stopShimmer()
+            shimmerLayout.visibility = View.GONE
+            recyclerViewCategory.visibility = View.VISIBLE
+            recyclerViewItem.visibility = View.VISIBLE
         }
     }
 

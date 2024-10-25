@@ -57,7 +57,8 @@ class AdminActivityVM : ViewModel() {
         }
 
         val storageReference = FirebaseStorage.getInstance().reference
-        val categoryImageRef = storageReference.child("CategoryImages/${categoryName}_${UUID.randomUUID()}.jpg")
+        val categoryImageRef =
+            storageReference.child("CategoryImages/${categoryName}_${UUID.randomUUID()}.jpg")
 
         categoryImageRef.putFile(categoryImageUri).addOnSuccessListener {
             categoryImageRef.downloadUrl.addOnSuccessListener { downloadUri ->
@@ -102,7 +103,11 @@ class AdminActivityVM : ViewModel() {
             // Save the item under the category
             categoryRef.child("items").child(itemId!!).setValue(itemData).addOnSuccessListener {
                 // After saving to the selected category, also save the item in the "All" category
-                saveItemToAllCategory(itemData, categoryName, categoryImageUrl) // Call to save to All category
+                saveItemToAllCategory(
+                    itemData,
+                    categoryName,
+                    categoryImageUrl
+                ) // Call to save to All category
             }.addOnFailureListener {
                 _uploadStatus.value = BlinkitConstants.FAILED_TO_SAVE_ITEM
             }
@@ -111,8 +116,13 @@ class AdminActivityVM : ViewModel() {
         }
     }
 
-    private fun saveItemToAllCategory(itemData: Map<String, String?>, categoryName: String, categoryImageUrl: String) {
-        val databaseReference = FirebaseDatabase.getInstance().reference.child("BlinkitItems").child("All")
+    private fun saveItemToAllCategory(
+        itemData: Map<String, String?>,
+        categoryName: String,
+        categoryImageUrl: String
+    ) {
+        val databaseReference =
+            FirebaseDatabase.getInstance().reference.child("BlinkitItems").child("All")
 
         // Create a map for the category data
         val categoryData = mapOf(
@@ -130,7 +140,8 @@ class AdminActivityVM : ViewModel() {
                 remove("categoryImageUrl")
             }
             // Update the All category with the item data
-            databaseReference.child("Items").child(itemId!!).setValue(itemDataWithoutCategoryImageUrl).addOnSuccessListener {
+            databaseReference.child("Items").child(itemId!!)
+                .setValue(itemDataWithoutCategoryImageUrl).addOnSuccessListener {
                 _uploadStatus.value = BlinkitConstants.ITEM_SAVED_SUCCESSFULLY
             }.addOnFailureListener {
                 _uploadStatus.value = BlinkitConstants.FAILED_TO_SAVE_ITEM

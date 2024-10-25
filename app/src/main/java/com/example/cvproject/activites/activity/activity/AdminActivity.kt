@@ -62,7 +62,12 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
                     val categoryName = categoryName
 
                     viewModel.uploadItemToFirebase(
-                        itemName, itemPrice, itemQuantity, selectedImageUri, categoryName!!, categoryImageUri
+                        itemName,
+                        itemPrice,
+                        itemQuantity,
+                        selectedImageUri,
+                        categoryName!!,
+                        categoryImageUri
                     )
                 }
             }
@@ -116,11 +121,6 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
                     getString(R.string.select_image_first_to_proceed_further), binding.root
                 )
                 return false
-            } else if (clRight.visibility == View.VISIBLE && categoryImageUri == null) {
-                Utils.showSnackBar(
-                    getString(R.string.select_category_image_first_to_proceed_further), binding.root
-                )
-                return false
             }
         }
         return true
@@ -157,6 +157,7 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
     private fun showProgress() {
         binding.apply {
             buttonAddImage.visibility = View.INVISIBLE
+            buttonAddImageCategory.visibility = View.INVISIBLE
             progressBar.visibility = View.VISIBLE
             buttonSaveImage.visibility = View.INVISIBLE
         }
@@ -165,6 +166,7 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
     private fun hideProgress() {
         binding.apply {
             buttonAddImage.visibility = View.VISIBLE
+            buttonAddImageCategory.visibility = View.VISIBLE
             progressBar.visibility = View.GONE
             buttonSaveImage.visibility = View.VISIBLE
         }

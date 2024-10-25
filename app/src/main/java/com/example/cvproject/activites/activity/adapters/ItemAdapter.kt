@@ -33,7 +33,7 @@ class ItemAdapter(
             itemView.findViewById<TextView>(R.id.tv_price).text =
                 "${fragment.getString(R.string.rupee_symbol, item.price)}"
 
-            val randomValue = Random.nextInt(30, 60)
+            val randomValue = Random.nextInt(10, 20)
             val originalPrice = item.price!!.toInt() + randomValue
             val realPrice = itemView.findViewById<TextView>(R.id.tv_real_price)
             realPrice.paintFlags = realPrice.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG

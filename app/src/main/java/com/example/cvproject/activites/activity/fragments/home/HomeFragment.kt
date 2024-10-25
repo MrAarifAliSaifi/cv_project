@@ -91,6 +91,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun observeHomeListItems() {
+        homeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            if (isLoading) showLoading() else hideLoading()
+        }
         homeViewModel.itemList.observe(viewLifecycleOwner) { items ->
             setupRecyclerView(items)
         }
@@ -311,6 +314,26 @@ class HomeFragment : Fragment() {
 
     private fun isAddressSet(): Boolean {
         return homeViewModel.getCurrentAddress() != null
+    }
+
+    private fun showLoading() {
+        binding.apply {
+            (context as MainActivity).hideBottomNavAndCart()
+            shimmerLayout.visibility = View.VISIBLE
+            shimmerLayout.startShimmer()
+            appBarLayout.visibility = View.GONE
+            swipeRefreshLayout.visibility = View.GONE
+        }
+    }
+
+    private fun hideLoading() {
+        binding.apply {
+            (context as MainActivity).showBottomNavAndCart()
+            shimmerLayout.stopShimmer()
+            shimmerLayout.visibility = View.GONE
+            appBarLayout.visibility = View.VISIBLE
+            swipeRefreshLayout.visibility = View.VISIBLE
+        }
     }
 
     override fun onDestroyView() {
