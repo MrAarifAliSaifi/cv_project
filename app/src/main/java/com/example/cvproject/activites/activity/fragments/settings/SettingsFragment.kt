@@ -9,18 +9,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.cvproject.activites.activity.activity.AdminActivity
 import com.example.cvproject.activites.activity.activity.LoginActivity
+import com.example.cvproject.activites.activity.activity.ProfileActivity
 import com.example.cvproject.activites.activity.adapters.NotificationAdapter
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
+import com.example.cvproject.activites.activity.dataBase.BlinkitDatabase
 import com.example.cvproject.activites.activity.dataclass.ListItemNotification
+import com.google.firebase.database.FirebaseDatabase
 import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.BuildConfig
 import cvproject.blinkit.R
+import cvproject.blinkit.activites.activity.ui.home.HomeViewModel
 import cvproject.blinkit.databinding.FragmentSettingsBinding
 
-class SettingsFragment : Fragment() {
-
+class SettingsFragment() : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
     private var adapter: NotificationAdapter? = null
@@ -29,8 +33,10 @@ class SettingsFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        viewModel = ViewModelProvider(this).get(SettingsViewModel::class.java)
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
+        val database = BlinkitDatabase.getDatabase(requireContext())
+        val homePageItemsDao = database.blinkitDao()
+        viewModel = SettingsViewModel(homePageItemsDao, FirebaseDatabase.getInstance())
         val root: View = binding.root
         return root
     }
@@ -59,6 +65,11 @@ class SettingsFragment : Fragment() {
             xRecyclerView.layoutManager = LinearLayoutManager(requireContext())
             xImageView.background = resources.getDrawable(R.drawable.profile)
         }
+        binding.ivProfile.setOnClickListener {
+            moveToProfileScreen()
+        }
+         viewModel.fetchUserInfo()
+        setupUserdetail()
     }
 
     override fun onDestroyView() {
@@ -136,5 +147,19 @@ class SettingsFragment : Fragment() {
         val intent = LoginActivity.getStartIntent(requireContext())
         startActivity(intent)
         requireActivity().finish()
+    }
+    private fun moveToProfileScreen() {
+        startActivity(Intent(ProfileActivity.getStartIntent(requireContext())))
+    }
+
+    private fun setupUserdetail(){
+        viewModel.userInfo.observe(viewLifecycleOwner) { data ->
+            if (data != null) {
+                binding.xUserName.text= data.name
+                Glide.with(binding.xImageView.context)
+                    .load(data.imageUri)
+                    .into(binding.xImageView)
+            }
+        }
     }
 }

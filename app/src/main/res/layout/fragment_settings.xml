@@ -30,8 +30,10 @@
                     android:id="@+id/x_image_view"
                     android:layout_width="@dimen/_31sdp"
                     android:layout_height="@dimen/_31sdp"
-                    android:padding="@dimen/_5sdp"
                     android:layout_marginStart="@dimen/_14sdp"
+                    android:background="@drawable/image_background"
+                    android:padding="@dimen/_5sdp"
+                    android:src="@drawable/profile"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -80,18 +82,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_15sdp"
-            android:padding="@dimen/_5sdp"
             android:background="@drawable/rounded_corner_background"
             android:backgroundTint="@color/white"
+            android:padding="@dimen/_5sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/x_card_view"
             tools:listitem="@layout/settings_item" />
 
         <include
-            android:layout_height="@dimen/dp_0"
-            android:layout_width="match_parent"
             layout="@layout/blinkit_text"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/x_recycler_view" />

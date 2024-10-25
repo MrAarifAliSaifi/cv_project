@@ -316,7 +316,7 @@ class HomeFragment : Fragment() {
         homeViewModel.userInfo.observe(viewLifecycleOwner) { data ->
             if (data != null) {
                 binding.blinkitIn.text= data.name
-                Glide.with(binding.circleIv.context)
+                val into = Glide.with(binding.circleIv.context)
                     .load(data.imageUri)
                     .into(binding.circleIv)
             }
