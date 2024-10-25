@@ -5,8 +5,6 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.google.firebase.auth.UserInfo
-
 @Dao
 interface BlinkitDao {
 
@@ -28,7 +26,6 @@ interface BlinkitDao {
     @Query("SELECT * FROM savedAddressesTable")
     suspend fun getAllSavedAddresses(): List<SavedAddresses>
 
-    // Check that similer address is not present
     @Query("SELECT COUNT(*) FROM savedAddressesTable WHERE LOWER(:name) LIKE '%' || LOWER(:name) || '%'")
     fun getSimilarItemCount(name: String): Int
     @Insert

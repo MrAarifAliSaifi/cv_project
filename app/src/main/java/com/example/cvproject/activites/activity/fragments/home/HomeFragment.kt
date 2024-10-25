@@ -183,7 +183,7 @@ class HomeFragment : Fragment() {
         })
     }
 
-    private fun checkLocationPermission() {
+     fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
@@ -272,7 +272,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun showNoAddressFoundDialog() {
-        val bottomSheet = ItemListDialogFragment()
+        val bottomSheet = ItemListDialogFragment(homeViewModel)
         bottomSheet.show(childFragmentManager, bottomSheet.tag)
     }
 

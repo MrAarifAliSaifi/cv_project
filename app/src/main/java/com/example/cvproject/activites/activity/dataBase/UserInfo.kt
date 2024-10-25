@@ -5,9 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "users")
 data class UserInfo(
-    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val name: String,
     val imageUri: String,
-    val createdAt: Long = System.currentTimeMillis() // Default to current time
+    val createdAt: Long = System.currentTimeMillis()
 
 )
