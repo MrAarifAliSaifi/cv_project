@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/transparent">
+
+    <!-- Profile Image -->
+    <ImageView
+        android:id="@+id/ivProfileImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/bg_circular"
+        android:contentDescription="Profile Image"
+        android:scaleType="centerCrop"
+        app:layout_constraintBottom_toTopOf="@id/btnUploadImage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- Button to upload image -->
+    <Button
+        android:id="@+id/btnUploadImage"
+        android:background="@drawable/bg_et"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Upload Profile Image"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="4dp"
+        android:paddingStart="24dp"
+        android:paddingEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivProfileImage" />
+
+    <!-- Name EditText -->
+    <EditText
+        android:id="@+id/etName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Enter your name"
+        android:background="@drawable/bg_et"
+        android:padding="12dp"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btnUploadImage" />
+
+    <!-- Submit Button -->
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Submit"
+        android:textColor="@color/white"
+        android:backgroundTint="@color/colorPrimary"
+        android:elevation="4dp"
+        android:paddingStart="24dp"
+        android:background="@drawable/bg_et"
+        android:paddingEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

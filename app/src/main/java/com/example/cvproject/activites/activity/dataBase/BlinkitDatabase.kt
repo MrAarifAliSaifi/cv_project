@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [HomeItems::class, SavedAddresses::class], version = 1)
+@Database(entities = [HomeItems::class, SavedAddresses::class, UserInfo::class], version = 3)
 abstract class BlinkitDatabase : RoomDatabase() {
 
     abstract fun blinkitDao(): BlinkitDao

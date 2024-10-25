@@ -15,9 +15,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.basicmvvmapp.MainActivity
@@ -27,13 +30,17 @@ import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.dataBase.BlinkitDatabase
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.example.cvproject.activites.activity.utilities.Utils
+import com.example.cvproject.activites.activity.viewmodeles.MainActivityVM
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.FragmentHomeBinding
@@ -46,6 +53,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var homeViewModel: HomeViewModel
+    private val viewModel: MainActivityVM by activityViewModels()
     private lateinit var adapter: HomeItemsAdapter
     private val itemList = mutableListOf<ItemDataClass>()
     private val filteredList = mutableListOf<ItemDataClass>()
@@ -57,60 +65,28 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        initializeViewModel()
+        val database = BlinkitDatabase.getDatabase(requireContext())
+        val homePageItemsDao = database.blinkitDao()
+//        homeViewModel = HomeViewModel(homePageItemsDao)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        homeViewModel.fetchItemsFromDatabase()
-        observeHomeListItems()
-        setRandomDeliveryTime()
-        setupSwipeRefreshLayout()
-        setLocation()
-        setStatusBarColor()
-    }
+        _binding?.apply {
 
-    private fun setLocation() {
-        if (Prefs.getString(BlinkitConstants.LOCATION).isNotEmpty()) {
-            binding.tvLocation.text = TextUtils.concat(
-                Utils.styleStrings(getString(R.string.title_home)),
-                " - ",
-                Prefs.getString(BlinkitConstants.LOCATION)
-            )
-        } else {
+            setupRecyclerView()
+            fetchItemsFromDatabase()
+            setupUserdetail()
+
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
             checkLocationPermission()
-        }
-    }
 
-    private fun initializeViewModel() {
-        val database = BlinkitDatabase.getDatabase(requireContext()).blinkitDao()
-        val firebaseDatabase = FirebaseDatabase.getInstance()
-        homeViewModel = HomeViewModel(database, firebaseDatabase)
-    }
-
-    private fun observeHomeListItems() {
-        homeViewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
-            if (isLoading) showLoading() else hideLoading()
-        }
-        homeViewModel.itemList.observe(viewLifecycleOwner) { items ->
-            setupRecyclerView(items)
-        }
-    }
-
-    private fun setRandomDeliveryTime() {
-        val time = Random.nextInt(10, 21)
-        binding.tvDeliveryTime.text = getString(R.string.minutes, time)
-    }
-
-    fun setupSwipeRefreshLayout() {
-        binding.apply {
             swipeRefreshLayout.setOnRefreshListener {
-                swipeRefreshLayout.isRefreshing = true
-                observeHomeListItems()
+                binding.swipeRefreshLayout.isRefreshing = true
+                fetchItemsFromDatabase()
                 Handler().postDelayed({
-                    swipeRefreshLayout.isRefreshing = false
+                    binding.swipeRefreshLayout.isRefreshing = false
                 }, 4000)
                 swipeRefreshLayout.setColorSchemeColors(
                     resources.getColor(R.color.red),
@@ -119,12 +95,20 @@ class HomeFragment : Fragment() {
                     resources.getColor(R.color.blue_037CBF)
                 )
             }
+
+            setupSearchView()
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                requireActivity().window.statusBarColor =
+                    ContextCompat.getColor(requireContext(), R.color.yellow_F7E0B4)
+            }
+
+            val time = Random.nextInt(10, 21)
+            tvDeliveryTime.text = getString(R.string.minutes, time)
         }
     }
 
-    private fun setupRecyclerView(itemList: List<ItemDataClass>) {
-        filteredList.clear()
-        filteredList.addAll(itemList)
+    private fun setupRecyclerView() {
         binding.apply {
             adapter = HomeItemsAdapter(requireContext(), filteredList, homeViewModel)
             recyclerView.adapter = adapter
@@ -146,42 +130,60 @@ class HomeFragment : Fragment() {
                     }
                 }
             })
-
-            searchView.apply {
-                setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        return false
-                    }
-
-                    override fun onQueryTextChange(query: String?): Boolean {
-                        if (query.isNullOrEmpty()) {
-                            filteredList.clear()
-                            filteredList.addAll(itemList)
-                        } else {
-                            val searchQuery = query.lowercase()
-                            filteredList.clear()
-                            val results = itemList.filter {
-                                it.name?.lowercase()?.contains(searchQuery) == true
-                            }
-                            filteredList.addAll(results)
-                        }
-                        adapter.notifyDataSetChanged()
-                        return true
-                    }
-                })
-
-                setOnSearchClickListener {
-                    (context as MainActivity).hideBottomNavAndCart()
-                }
-                setOnCloseListener {
-                    (context as MainActivity).showBottomNavAndCart()
-                    false
-                }
-            }
         }
     }
 
-    fun checkLocationPermission() {
+    private fun setupSearchView() {
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(query: String?): Boolean {
+                filterList(query)
+                return true
+            }
+        })
+    }
+
+    private fun filterList(query: String?) {
+        if (query.isNullOrEmpty()) {
+            filteredList.clear()
+            filteredList.addAll(itemList)
+        } else {
+            val searchQuery = query.lowercase()
+            filteredList.clear()
+            filteredList.addAll(itemList.filter {
+                it.name!!.lowercase().contains(searchQuery)
+            })
+        }
+        adapter.notifyDataSetChanged()
+    }
+
+    private fun fetchItemsFromDatabase() {
+        itemList.clear()
+        databaseReference = FirebaseDatabase.getInstance().getReference("BlinkitItems")
+        databaseReference.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                itemList.clear()
+                for (itemSnapshot in snapshot.children) {
+                    val item = itemSnapshot.getValue(ItemDataClass::class.java)
+                    if (item != null) {
+                        itemList.add(item)
+                    }
+                }
+                filteredList.clear()
+                filteredList.addAll(itemList)
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Utils.showToast(requireActivity(), error.message)
+            }
+        })
+    }
+
+    private fun checkLocationPermission() {
         if (ContextCompat.checkSelfPermission(
                 requireActivity(), Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
@@ -194,27 +196,24 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setStatusBarColor() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            requireActivity().window.statusBarColor =
-                ContextCompat.getColor(requireContext(), R.color.yellow_F7E0B4)
-        }
-    }
-
     private fun turnOnLocation() {
         val locationRequest = LocationRequest.create().apply {
             priority = LocationRequest.PRIORITY_HIGH_ACCURACY
-            interval = 10000
-            fastestInterval = 5000
+            interval = 10000 // 10 seconds
+            fastestInterval = 5000 // 5 seconds
         }
+
         val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequest)
             .setAlwaysShow(true)
+
         val settingsClient = LocationServices.getSettingsClient(requireActivity())
         val task = settingsClient.checkLocationSettings(builder.build())
+
         task.addOnSuccessListener {
             // Location settings are already satisfied, you can get the current location
             getCurrentLocation()
         }
+
         task.addOnFailureListener { exception ->
             if (exception is ResolvableApiException) {
                 try {
@@ -262,8 +261,7 @@ class HomeFragment : Fragment() {
                 binding.tvLocation.text = TextUtils.concat(
                     Utils.styleStrings(getString(R.string.title_home)), " - ", addressString
                 )
-                homeViewModel.insertAddress(addressString)
-                homeViewModel.setCurrentAddress(addressString)
+                Prefs.putString(BlinkitConstants.LOCATION, addressString)
             } else {
                 showNoAddressFoundDialog()
             }
@@ -274,10 +272,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun showNoAddressFoundDialog() {
-        if (!isAddressSet()) {
-            val bottomSheet = ItemListDialogFragment(homeViewModel)
-            bottomSheet.show(childFragmentManager, bottomSheet.tag)
-        }
+        val bottomSheet = ItemListDialogFragment()
+        bottomSheet.show(childFragmentManager, bottomSheet.tag)
     }
 
     override fun onRequestPermissionsResult(
@@ -307,37 +303,19 @@ class HomeFragment : Fragment() {
     }
 
     fun updateLocationText(location: String) {
-        binding.tvLocation.text = TextUtils.concat(
-            Utils.styleStrings(getString(R.string.title_home)), " - ", location
-        )
-    }
-
-    private fun isAddressSet(): Boolean {
-        return homeViewModel.getCurrentAddress() != null
-    }
-
-    private fun showLoading() {
-        binding.apply {
-            (context as MainActivity).hideBottomNavAndCart()
-            shimmerLayout.visibility = View.VISIBLE
-            shimmerLayout.startShimmer()
-            appBarLayout.visibility = View.GONE
-            swipeRefreshLayout.visibility = View.GONE
-        }
-    }
-
-    private fun hideLoading() {
-        binding.apply {
-            (context as MainActivity).showBottomNavAndCart()
-            shimmerLayout.stopShimmer()
-            shimmerLayout.visibility = View.GONE
-            appBarLayout.visibility = View.VISIBLE
-            swipeRefreshLayout.visibility = View.VISIBLE
-        }
+        binding.tvLocation.text = location
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupUserdetail(){
+        viewModel.userInfo.observe(viewLifecycleOwner) { data ->
+            if (data != null) {
+                Toast.makeText(requireContext(), "${data.name}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }
