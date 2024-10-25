@@ -28,8 +28,8 @@ class HomeViewModel(
     val itemList: LiveData<List<ItemDataClass>> get() = _itemList
     private val itemsList = mutableListOf<ItemDataClass>()
 
-    private  val _userInfo=MutableLiveData<UserInfo>()
-    val userInfo:LiveData<UserInfo> get() = _userInfo
+    private val _userInfo = MutableLiveData<UserInfo>()
+    val userInfo: LiveData<UserInfo> get() = _userInfo
 
 
     private val _saveAddress = MutableLiveData<List<SavedAddresses>>()
@@ -43,7 +43,6 @@ class HomeViewModel(
             blinkitDao.insertItemUrl(HomeItems(itemIdGeneratedFromFirebase = itemId))
         }
     }
-
 
 
     fun fetchUserInfo() {

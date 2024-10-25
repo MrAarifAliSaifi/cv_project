@@ -13,6 +13,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -107,7 +108,7 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_margin="@dimen/_18sdp"
                     android:background="@drawable/image_background"
-                    android:padding="@dimen/_5sdp"
+                    android:padding="@dimen/_4sdp"
                     android:src="@drawable/profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
@@ -133,8 +134,7 @@
         android:layout_height="match_parent"
         app:shimmer_auto_start="true">
 
-        <include
-            layout="@layout/shimmer_layout_home"/>
+        <include layout="@layout/shimmer_layout_home" />
     </com.facebook.shimmer.ShimmerFrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
