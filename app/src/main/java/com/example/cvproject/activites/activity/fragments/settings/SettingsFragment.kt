@@ -5,9 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
-import cvproject.blinkit.BuildConfig
 import android.view.ViewGroup
-import cvproject.blinkit.R
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +15,8 @@ import com.example.cvproject.activites.activity.adapters.NotificationAdapter
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.dataclass.ListItemNotification
 import com.pixplicity.easyprefs.library.Prefs
+import cvproject.blinkit.BuildConfig
+import cvproject.blinkit.R
 import cvproject.blinkit.databinding.FragmentSettingsBinding
 
 class SettingsFragment : Fragment() {

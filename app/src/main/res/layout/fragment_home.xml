@@ -45,6 +45,7 @@
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/home_item_background">
@@ -106,8 +107,8 @@
                     android:layout_height="@dimen/_30sdp"
                     android:layout_margin="@dimen/_18sdp"
                     android:background="@drawable/image_background"
-                    android:src="@drawable/profile"
                     android:padding="@dimen/_5sdp"
+                    android:src="@drawable/profile"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -125,5 +126,15 @@
             android:queryHint="@string/search_mango" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmer_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:shimmer_auto_start="true">
+
+        <include
+            layout="@layout/shimmer_layout_home"/>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

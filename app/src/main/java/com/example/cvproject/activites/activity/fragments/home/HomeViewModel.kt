@@ -30,6 +30,9 @@ class HomeViewModel(
     private val _saveAddress = MutableLiveData<List<SavedAddresses>>()
     val saveAddress: LiveData<List<SavedAddresses>> get() = _saveAddress
 
+    private val _isLoading = MutableLiveData<Boolean>()
+    val isLoading: LiveData<Boolean> get() = _isLoading
+
     fun saveItemUrl(itemId: String) {
         viewModelScope.launch {
             blinkitDao.insertItemUrl(HomeItems(itemIdGeneratedFromFirebase = itemId))
@@ -37,6 +40,7 @@ class HomeViewModel(
     }
 
     fun fetchItemsFromDatabase() {
+        _isLoading.value = true
         viewModelScope.launch(Dispatchers.IO) {
             itemsList.clear()
             val reference =
@@ -50,9 +54,11 @@ class HomeViewModel(
                         }
                     }
                     _itemList.postValue(itemsList)
+                    _isLoading.value = false
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    _isLoading.value = false
                     Log.e("TAG", "onCancelled: " + error.message)
                 }
             })
