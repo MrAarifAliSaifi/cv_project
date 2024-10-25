@@ -1,5 +1,6 @@
 package com.example.basicmvvmapp
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.view.View
@@ -8,16 +9,20 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bumptech.glide.Glide
 import com.example.cvproject.activites.activity.activity.CheckoutActivity
+import com.example.cvproject.activites.activity.activity.ProfileActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
+import com.example.cvproject.activites.activity.dataBase.BlinkitDatabase
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.viewmodeles.MainActivityVM
+import com.example.cvproject.activites.activity.viewmodeles.MainVMFactory
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.ActivityMainBinding
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
+
     private val viewmodel: MainActivityVM by viewModels()
 
     companion object {
@@ -34,10 +39,15 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
     }
 
     override fun initializeViewModel(): MainActivityVM {
-        return viewmodel
+        val database = BlinkitDatabase.getDatabase(this)
+        val homePageItemsDao = database.blinkitDao()
+        val factory = MainVMFactory(homePageItemsDao)
+        return viewModels<MainActivityVM> { factory }.value
     }
 
     override fun setupUI() {
+        val database = BlinkitDatabase.getDatabase(this)
+        viewmodel.fetchUserInfo()
         if (Utils.isInternetConnected(this@MainActivity)) {
             setupNavigation()
         } else {
@@ -45,6 +55,8 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
                 getString(R.string.err_msg_no_internet_connection), binding.root
             )
         }
+        completeProfileDalog()
+
     }
 
     override fun setupListeners() {
@@ -54,6 +66,9 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
     }
 
     override fun observeViewModel() {
+        viewModel.userInfo.observe(this) { userInfo ->
+            if (userInfo ==null) {}
+        }
     }
 
     private fun setupNavigation() {
@@ -103,5 +118,22 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
     fun hideBottomNavAndCart() {
         binding.cartLayout.root.visibility = View.GONE
         binding.navView.visibility = View.GONE
+    }
+
+    private fun completeProfileDalog() {
+        val builder = AlertDialog.Builder(this) // Use 'requireContext()' if inside a Fragment
+        builder.setTitle("Profile")
+        builder.setMessage("Please Complete Your Profile First!!")
+        builder.setCancelable(false)
+        builder.setPositiveButton("OK") { dialog, _ ->
+            moveTpProfileScreen()
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    private fun moveTpProfileScreen() {
+        startActivity(Intent(ProfileActivity.getStartIntent(this)))
     }
 }

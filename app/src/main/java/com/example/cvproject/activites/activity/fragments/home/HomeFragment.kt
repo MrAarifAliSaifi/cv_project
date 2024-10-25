@@ -15,9 +15,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.basicmvvmapp.MainActivity
@@ -27,6 +30,7 @@ import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.dataBase.BlinkitDatabase
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
 import com.example.cvproject.activites.activity.utilities.Utils
+import com.example.cvproject.activites.activity.viewmodeles.MainActivityVM
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
@@ -49,6 +53,7 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private lateinit var homeViewModel: HomeViewModel
+    private val viewModel: MainActivityVM by activityViewModels()
     private lateinit var adapter: HomeItemsAdapter
     private val itemList = mutableListOf<ItemDataClass>()
     private val filteredList = mutableListOf<ItemDataClass>()
@@ -62,7 +67,7 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val database = BlinkitDatabase.getDatabase(requireContext())
         val homePageItemsDao = database.blinkitDao()
-        homeViewModel = HomeViewModel(homePageItemsDao)
+//        homeViewModel = HomeViewModel(homePageItemsDao)
         return binding.root
     }
 
@@ -72,6 +77,7 @@ class HomeFragment : Fragment() {
 
             setupRecyclerView()
             fetchItemsFromDatabase()
+            setupUserdetail()
 
             fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
             checkLocationPermission()
@@ -303,5 +309,13 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun setupUserdetail(){
+        viewModel.userInfo.observe(viewLifecycleOwner) { data ->
+            if (data != null) {
+                Toast.makeText(requireContext(), "${data.name}", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 }

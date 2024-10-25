@@ -21,4 +21,12 @@ interface BlinkitDao {
     @Query("SELECT * FROM itemsId WHERE itemIdGeneratedFromFirebase = :itemId")
     suspend fun getItemById(itemId: String): HomeItems?
 
+    @Insert
+    suspend fun insertUser(user: UserInfo)
+
+    @Query("SELECT * FROM users")
+    suspend fun getAllUsers(): List<UserInfo>
+
+    @Query("SELECT * FROM users ORDER BY createdAt DESC LIMIT 1")
+    suspend fun getUserInfo(): UserInfo?
 }

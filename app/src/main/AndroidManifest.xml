@@ -39,6 +39,9 @@
             android:name="com.example.cvproject.activites.activity.activity.OTPActivity"
             android:exported="true" />
         <activity
+            android:name="com.example.cvproject.activites.activity.activity.ProfileActivity"
+            android:exported="true" />
+        <activity
             android:name="com.example.cvproject.activites.activity.activity.SplashActivity"
             android:exported="true"
             android:label="@string/title_activity_main">
