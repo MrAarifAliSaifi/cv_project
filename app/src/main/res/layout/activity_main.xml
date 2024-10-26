@@ -33,9 +33,11 @@
         android:visibility="gone"
         android:id="@+id/cart_layout"
         layout="@layout/cart_item"
-        android:layout_width="match_parent"
-        android:layout_margin="@dimen/_10sdp"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/nav_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

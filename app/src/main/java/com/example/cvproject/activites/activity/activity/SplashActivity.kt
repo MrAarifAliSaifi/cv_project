@@ -43,7 +43,7 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
     }
 
     private fun decideNextScreen() {
-        val isLoggedIn = Prefs.getBoolean(BlinkitConstants.IS_LOGGED_IN,false)
+        val isLoggedIn = Prefs.getBoolean(BlinkitConstants.IS_LOGGED_IN,true)
         if (isLoggedIn) {
             val intent = MainActivity.getStartIntent(this)
             startActivity(intent)

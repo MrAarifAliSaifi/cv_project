@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="@dimen/_4sdp"
     android:minWidth="@dimen/_110sdp"
-    android:minHeight="@dimen/_175sdp">
+    android:minHeight="@dimen/_180sdp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cl_top"
@@ -85,36 +85,62 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_quantity" />
 
+        <ImageView
+            android:id="@+id/iv_discount"
+            android:layout_width="@dimen/_10sdp"
+            android:layout_height="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:background="@drawable/sale"
+            app:layout_constraintBottom_toBottomOf="@+id/tv_discount"
+            app:layout_constraintStart_toStartOf="@id/tv_item_name"
+            app:layout_constraintTop_toTopOf="@+id/tv_discount" />
+
+        <TextView
+            android:id="@+id/tv_discount"
+            android:layout_width="@dimen/dp_0"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:text=""
+            android:textSize="@dimen/_8ssp"
+            app:layout_constraintEnd_toEndOf="@id/tv_item_name"
+            app:layout_constraintStart_toEndOf="@id/iv_discount"
+            app:layout_constraintTop_toBottomOf="@id/tv_item_name" />
+
         <TextView
             android:id="@+id/tv_price"
             android:layout_width="@dimen/dp_0"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_5sdp"
-            android:text=""
+            android:layout_marginStart="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:textSize="@dimen/_10ssp"
+            android:text=""
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/guideline"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_discount" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_0"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent="0.4" />
+            app:layout_constraintGuide_percent="0.3" />
 
         <TextView
             android:id="@+id/tv_real_price"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_8sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
             android:text=""
             android:textSize="@dimen/_8ssp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline"
-            app:layout_constraintTop_toBottomOf="@id/tv_item_name" />
+            app:layout_constraintTop_toBottomOf="@id/tv_discount" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

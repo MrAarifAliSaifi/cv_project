@@ -85,4 +85,5 @@
     <string name="item_catrgory">Item Category</string>
     <string name="select_category">Select Category</string>
     <string name="add">ADD</string>
+    <string name="off">% OFF</string>
 </resources>

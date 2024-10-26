@@ -138,4 +138,9 @@ object Utils {
     fun View.gone() {
         this.visibility = View.GONE
     }
+
+    fun returnPercentage(discountedPrice: Int, actualPrice: Int): Int {
+        val diff = actualPrice - discountedPrice
+        return (diff * 100) / actualPrice
+    }
 }
