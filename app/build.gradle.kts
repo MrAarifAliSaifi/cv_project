@@ -32,6 +32,11 @@ android {
             )
         }
     }
+
+    packagingOptions {
+        exclude("/META-INF/DEPENDENCIES")
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -115,5 +120,6 @@ dependencies {
     implementation(libs.prefs)
     //viewPager
     implementation(libs.androidx.viewpager2)
+    implementation(libs.google.auth)
 
 }

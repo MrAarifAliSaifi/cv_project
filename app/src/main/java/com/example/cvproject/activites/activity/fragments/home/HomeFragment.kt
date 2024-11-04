@@ -33,7 +33,6 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.LocationSettingsRequest
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
@@ -48,9 +47,7 @@ class HomeFragment : Fragment() {
     private val binding get() = _binding!!
     private lateinit var homeViewModel: HomeViewModel
     private lateinit var adapter: HomeItemsAdapter
-    private val itemList = mutableListOf<ItemDataClass>()
     private val filteredList = mutableListOf<ItemDataClass>()
-    private lateinit var databaseReference: DatabaseReference
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val LOCATION_PERMISSION_REQUEST_CODE = 1000
 
@@ -71,7 +68,7 @@ class HomeFragment : Fragment() {
         setupSwipeRefreshLayout()
         setLocation()
         setStatusBarColor()
-        setupUserdetail()
+        setupUserDetail()
     }
 
     private fun setLocation() {
@@ -107,7 +104,7 @@ class HomeFragment : Fragment() {
         binding.tvDeliveryTime.text = getString(R.string.minutes, time)
     }
 
-    fun setupSwipeRefreshLayout() {
+    private fun setupSwipeRefreshLayout() {
         binding.apply {
             swipeRefreshLayout.setOnRefreshListener {
                 swipeRefreshLayout.isRefreshing = true
@@ -339,7 +336,7 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun setupUserdetail() {
+    private fun setupUserDetail() {
         homeViewModel.userInfo.observe(viewLifecycleOwner) { data ->
             if (data != null) {
                 binding.blinkitIn.text = data.name

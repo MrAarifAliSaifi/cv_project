@@ -7,21 +7,34 @@ import android.graphics.Typeface
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.os.StrictMode
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.View
 import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.cvproject.activites.activity.dataBase.HomeItems
+import com.example.cvproject.activites.activity.dataclass.AccessToken
 import com.example.cvproject.activites.activity.dataclass.ItemDataClass
+import com.example.cvproject.activites.activity.dataclass.Notification
+import com.example.cvproject.activites.activity.dataclass.NotificationData
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.messaging.FirebaseMessaging
 import cvproject.blinkit.R
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 object Utils {
 
@@ -142,5 +155,61 @@ object Utils {
     fun returnPercentage(discountedPrice: Int, actualPrice: Int): Int {
         val diff = actualPrice - discountedPrice
         return (diff * 100) / actualPrice
+    }
+
+
+    fun sendNotification(context: Context, title: String, body: String) {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                CoroutineScope(Dispatchers.IO).launch {
+                    try {
+                        val notification = Notification(
+                            message = NotificationData(
+                                task.result, hashMapOf(
+                                    "title" to title,
+                                    "body" to body
+                                )
+                            )
+                        )
+                        Log.e("Device Token", task.result)
+                        Log.e("Access Token", AccessToken.getAccessToken().toString())
+                        NotificationAPI.sendNotification().notification(notification)
+                            .enqueue(object : Callback<Notification> {
+                                override fun onResponse(
+                                    call: Call<Notification>, response: Response<Notification>
+                                ) {
+                                    if (response.isSuccessful) {
+                                        Log.e(
+                                            "TAG",
+                                            "Success ${response.message()}"
+                                        )
+                                    } else {
+                                        Log.e(
+                                            "TAG",
+                                            response.body().toString()
+                                        )
+                                    }
+                                }
+
+                                override fun onFailure(call: Call<Notification>, t: Throwable) {
+                                    Log.e("TAG", t.message.toString())
+                                }
+
+                            })
+                    } catch (e: Exception) {
+                        withContext(Dispatchers.Main) {
+                            Log.e("TAG", e.message.toString())
+                        }
+                    }
+                }
+            } else {
+                return@addOnCompleteListener
+            }
+        }
+    }
+
+    fun callPolicyFunction() {
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
     }
 }
