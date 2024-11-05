@@ -3,7 +3,6 @@ package com.example.cvproject.activites.activity.activity
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.os.StrictMode
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
@@ -91,8 +90,8 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
                     Utils.showToast(this, "Item saved successfully")
                     Utils.sendNotification(
                         this@AdminActivity,
-                        binding.editTextItemName.text.toString().trim(),
-                        binding.editTextItemPrice.text.toString().trim()
+                        "New Item added ${binding.editTextItemName.text.toString().trim()}",
+                        "Worth- ${binding.editTextItemPrice.text.toString().trim()}",
                     )
                     finish()
                 }

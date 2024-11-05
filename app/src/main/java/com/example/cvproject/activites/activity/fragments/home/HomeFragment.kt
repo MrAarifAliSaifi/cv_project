@@ -37,6 +37,10 @@ import com.google.firebase.database.FirebaseDatabase
 import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.FragmentHomeBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.IOException
 import java.util.Locale
 import kotlin.random.Random
@@ -50,6 +54,7 @@ class HomeFragment : Fragment() {
     private val filteredList = mutableListOf<ItemDataClass>()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val LOCATION_PERMISSION_REQUEST_CODE = 1000
+    private val itemNameList = mutableListOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -69,6 +74,7 @@ class HomeFragment : Fragment() {
         setLocation()
         setStatusBarColor()
         setupUserDetail()
+        Utils.callPolicyFunction()
     }
 
     private fun setLocation() {
@@ -125,6 +131,10 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView(itemList: List<ItemDataClass>) {
         filteredList.clear()
         filteredList.addAll(itemList)
+        itemNameList.addAll(itemList.map { it.name!! })
+        // Call the notification function
+        val (title, body) = generateRandomGroceryNotification()
+        scheduleRandomNotification(title, body)
         binding.apply {
             adapter = HomeItemsAdapter(requireContext(), filteredList, homeViewModel)
             recyclerView.adapter = adapter
@@ -340,11 +350,54 @@ class HomeFragment : Fragment() {
         homeViewModel.userInfo.observe(viewLifecycleOwner) { data ->
             if (data != null) {
                 binding.blinkitIn.text = data.name
-                val into = Glide.with(binding.circleIv.context)
+                Glide.with(binding.circleIv.context)
                     .load(data.imageUri)
                     .into(binding.circleIv)
             }
         }
+    }
+
+
+    private fun scheduleRandomNotification(title: String, body: String) {
+        val randomDelay = Random.nextLong(30_000, 60_000) // Random delay between 30s and 60s
+
+        CoroutineScope(Dispatchers.Main).launch {
+            delay(randomDelay) // Wait for the random delay
+            Utils.sendNotification(
+                requireContext(), title, body
+            ) // Call the sendNotification function
+        }
+    }
+
+    private fun generateRandomGroceryNotification(): Pair<String, String> {
+
+        val actionMessages = listOf(
+            "🔥 is now on sale!",
+            "✅ is back in stock!",
+            "💸 has a special offer!",
+            "🌿 is fresh and available!",
+            "🚚 is available for delivery!",
+            "⚠️ is in limited quantity!",
+            "⏳ has a discount for a limited time!",
+            "🍲 is perfect for today's recipe!",
+            "🍁 is a must-have for this season!",
+            "🆕 is freshly restocked!",
+            "🎉 comes with a buy-one-get-one-free offer!",
+            "💰 is available at a special price today!",
+            "👨‍🍳 is recommended by chefs!",
+            "⚡ is running out fast!",
+            "📍 is available for pickup nearby!"
+        )
+
+        // Generate random indices
+        val itemIndex = Random.nextInt(itemNameList.size)
+        val messageIndex = Random.nextInt(actionMessages.size)
+
+        // Generate random title and body
+        val title = "Grocery Update: ${itemNameList[itemIndex]}"
+        val body = "${itemNameList[itemIndex]} ${actionMessages[messageIndex]}"
+
+        return Pair(title, body)
     }
 
     override fun onDestroyView() {
