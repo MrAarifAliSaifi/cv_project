@@ -31,7 +31,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainActivityVM>() {
             return Intent(context, MainActivity::class.java).apply {
 
             }
-        }
+         }
     }
 
     override fun initializeViewBinding(): ActivityMainBinding {
