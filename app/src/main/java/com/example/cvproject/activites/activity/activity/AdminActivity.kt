@@ -14,6 +14,7 @@ import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.viewmodeles.AdminActivityVM
+import com.google.firebase.messaging.FirebaseMessaging
 import cvproject.blinkit.R
 import cvproject.blinkit.databinding.ActivityAdminBinding
 
@@ -83,7 +84,15 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
                 BlinkitConstants.UPLOADING -> showProgress()
                 BlinkitConstants.ITEM_SAVED_SUCCESSFULLY -> {
                     hideProgress()
+                    FirebaseMessaging.getInstance().subscribeToTopic("topic")
+                    // Below line is important to generate bearer token
+                    Utils.callPolicyFunction()
                     Utils.showToast(this, "Item saved successfully")
+                    Utils.sendNotification(
+                        this@AdminActivity,
+                        "New Item added ${binding.editTextItemName.text.toString().trim()}",
+                        "Worth- ${binding.editTextItemPrice.text.toString().trim()}",
+                    )
                     finish()
                 }
 

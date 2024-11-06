@@ -2,18 +2,19 @@ package com.example.cvproject.activites.activity.activity
 
 import android.annotation.SuppressLint
 import androidx.activity.viewModels
-import androidx.lifecycle.lifecycleScope
 import com.example.basicmvvmapp.MainActivity
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
 import com.example.cvproject.activites.activity.utilities.Utils
 import com.example.cvproject.activites.activity.viewmodeles.SplashVM
-import com.google.firebase.BuildConfig
 import com.google.firebase.FirebaseApp
 import com.pixplicity.easyprefs.library.Prefs
 import cvproject.blinkit.databinding.SpalshBindingBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlin.random.Random
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
@@ -43,7 +44,7 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
     }
 
     private fun decideNextScreen() {
-        val isLoggedIn = Prefs.getBoolean(BlinkitConstants.IS_LOGGED_IN,true)
+        val isLoggedIn = Prefs.getBoolean(BlinkitConstants.IS_LOGGED_IN, true)
         if (isLoggedIn) {
             val intent = MainActivity.getStartIntent(this)
             startActivity(intent)
@@ -53,5 +54,4 @@ class SplashActivity : BaseActivity<SpalshBindingBinding, SplashVM>() {
         }
         finish()
     }
-
 }
