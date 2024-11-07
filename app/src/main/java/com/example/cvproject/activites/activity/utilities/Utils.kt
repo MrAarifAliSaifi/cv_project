@@ -264,7 +264,7 @@ object Utils {
             while (true) {
                 sendNotification(title, body)
                 // Random delay between
-                val delayTime = Random.nextLong(30000L, 40000L)
+                val delayTime = Random.nextLong(30000L, 60000L)
                 delay(delayTime)
             }
         }
