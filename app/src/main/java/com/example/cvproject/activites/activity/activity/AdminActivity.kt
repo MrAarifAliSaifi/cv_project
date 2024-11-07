@@ -8,7 +8,6 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.example.cvproject.activites.activity.base.BaseActivity
 import com.example.cvproject.activites.activity.constant.BlinkitConstants
@@ -79,7 +78,7 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
     }
 
     override fun observeViewModel() {
-        viewModel.uploadStatus.observe(this, Observer { status ->
+        viewModel.uploadStatus.observe(this) { status ->
             when (status) {
                 BlinkitConstants.UPLOADING -> showProgress()
                 BlinkitConstants.ITEM_SAVED_SUCCESSFULLY -> {
@@ -89,9 +88,10 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
                     Utils.callPolicyFunction()
                     Utils.showToast(this, "Item saved successfully")
                     Utils.sendNotification(
-                        this@AdminActivity,
-                        "New Item added ${binding.editTextItemName.text.toString().trim()}",
-                        "Worth- ${binding.editTextItemPrice.text.toString().trim()}",
+                        "\uD83D\uDCE6 New Item Added: ${
+                            binding.editTextItemName.text.toString().trim()
+                        }",
+                        "\uD83D\uDCB0 Worth: ₹${binding.editTextItemPrice.text.toString().trim()}"
                     )
                     finish()
                 }
@@ -111,7 +111,7 @@ class AdminActivity : BaseActivity<ActivityAdminBinding, AdminActivityVM>() {
                     Utils.showToast(this, "Please select an image")
                 }
             }
-        })
+        }
     }
 
     private fun validateFields(): Boolean {

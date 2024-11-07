@@ -30,11 +30,13 @@ import com.google.firebase.messaging.FirebaseMessaging
 import cvproject.blinkit.R
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.random.Random
 
 object Utils {
 
@@ -158,7 +160,7 @@ object Utils {
     }
 
 
-    fun sendNotification(context: Context, title: String, body: String) {
+    fun sendNotification(title: String, body: String) {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 CoroutineScope(Dispatchers.IO).launch {
@@ -211,5 +213,60 @@ object Utils {
     fun callPolicyFunction() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
+    }
+
+    fun generateRandomGroceryNotification(itemNameList: MutableList<String>): Pair<String, String> {
+        Log.e("itemNameList", itemNameList.toString())
+        val emojis = listOf(
+            "🎊", "🕒", "😍", "😂", "😅", "😭",
+            "😜", "😝", "😛", "🤑", "🔥", "💯",
+            "❤️", "👍", "👎", "👏", "✨", "🌟",
+            "🎉", "😎", "🥳", "🤔", "🙌", "😇",
+            "🤩", "🥺", "🤗", "😏", "👀", "🌈",
+            "🎈", "🦄", "🍕", "🍔", "🍣", "🍰",
+            "🌍", "💪", "🧡", "🎁", "🌹", "🐶"
+        )
+
+        val actionMessages = listOf(
+            "🔥 is now on sale! ",
+            "✅ is back in stock! ",
+            "💸 has a special offer!",
+            "🌿 is fresh and available!",
+            "🚚 is available for delivery!",
+            "⚠️ is in limited quantity!",
+            "⏳ has a discount for a limited time!",
+            "🍲 is perfect for today's recipe!",
+            "🍁 is a must-have for this season!",
+            "🆕 is freshly restocked!",
+            "🎉 comes with a buy-one-get-one-free offer!",
+            "💰 is available at a special price today!",
+            "👨‍🍳 is recommended by chefs!",
+            "⚡ is running out fast!",
+            "📍 is available for pickup nearby!"
+        )
+
+        // Generate random indices
+        val itemIndex = Random.nextInt(itemNameList.size)
+        val messageIndex = Random.nextInt(actionMessages.size)
+        // Generate a random number of emojis to add (e.g., between 1 and 5)
+        val numberOfEmojis = Random.nextInt(1, 6) // Change the upper limit to allow more emojis
+        // Generate a random title with multiple emojis
+        val emojiList = List(numberOfEmojis) { emojis.random() } // Get a list of random emojis
+        val title =
+            "${itemNameList[itemIndex]} ${emojiList.joinToString("")}" // Join emojis into a string
+        // Generate random body message
+        val body = "${itemNameList[itemIndex]} ${actionMessages[messageIndex]}"
+        return Pair(title, body)
+    }
+
+    fun scheduleRandomNotification(title: String, body: String) {
+        CoroutineScope(Dispatchers.Main).launch {
+            while (true) {
+                sendNotification(title, body)
+                // Random delay between
+                val delayTime = Random.nextLong(30000L, 40000L)
+                delay(delayTime)
+            }
+        }
     }
 }
