@@ -261,10 +261,11 @@ object Utils {
 
     fun scheduleRandomNotification(title: String, body: String) {
         CoroutineScope(Dispatchers.Main).launch {
+            // Run as Background Tasks with below one
             while (true) {
                 sendNotification(title, body)
-                // Random delay between
-                val delayTime = Random.nextLong(30000L, 60000L)
+                // Wait for a random delay between 1 minute and 2 minutes
+                val delayTime = Random.nextLong(60000L, 120000L)
                 delay(delayTime)
             }
         }
