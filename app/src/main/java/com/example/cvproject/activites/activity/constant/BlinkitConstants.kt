@@ -1,6 +1,8 @@
 package com.example.cvproject.activites.activity.constant
 
 object BlinkitConstants {
+    var apiEndPoint: String = "/pg/v1/pay"
+    const val MERCHANT_ID="12345"
     const val LOCATION = "location"
     const val IS_LOGGED_IN = "isLoggedIn"
     const val IS_ITEM_ADDED = "isItemAdded"

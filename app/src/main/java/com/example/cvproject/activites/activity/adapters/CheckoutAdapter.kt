@@ -49,7 +49,7 @@ class CheckoutAdapter(
 
                 (context as? CheckoutActivity)?.findViewById<ConstraintLayout>(R.id.cl_place_order)
                     ?.setOnClickListener {
-                        Utils.showToast(context, "Yet to be Implemented")
+//                        Utils.showToast(context, "Yet to be Implemented")
                     }
 
                 (context as? CheckoutActivity)?.findViewById<TextView>(R.id.tv_total_price)?.text =

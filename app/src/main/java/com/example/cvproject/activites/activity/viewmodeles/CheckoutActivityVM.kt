@@ -35,12 +35,9 @@ class CheckoutActivityVM(application: Application) : AndroidViewModel(applicatio
 
     fun deleteItemUrl(itemId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            // Fetch the item from the database using its ID
             val itemToDelete = blinkitDao.getItemById(itemId)
             itemToDelete?.let {
-                // Delete the fetched item
                 blinkitDao.deleteItemUrl(it)
-                // Fetch the updated list from the database after deletion
                 val urls = blinkitDao.getAllSavedItemUrl()
                 Utils.fetchItemDetailsByUrls(urls) { itemList ->
                     _itemUrls.postValue(itemList)
